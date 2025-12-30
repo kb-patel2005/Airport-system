@@ -78,7 +78,7 @@ export default function Home() {
       {/* <Spline scene="https://prod.spline.design/1dvOIedESZf9Al1z/scene.splinecode" /> */}
 
 
-     <Spline scene="https://prod.spline.design/5KtnTLVrgrgTFPGG/scene.splinecode" />
+     {/* <Spline scene="https://prod.spline.design/5KtnTLVrgrgTFPGG/scene.splinecode" /> */}
  
 
 
