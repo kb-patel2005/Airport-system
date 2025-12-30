@@ -1,0 +1,16 @@
+.home-container{
+    background-position-x: center;
+    margin: 0;
+    padding: 0;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    /* width: 100vw; */
+    height: 100vh;
+    backdrop-filter: blur(20px);
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT05ihGJxjU49iNbzMVbNYPKD_fbZEMG8zbRg&s')
+}
