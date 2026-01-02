@@ -9,7 +9,7 @@ const addStaff = async (data) => {
         formData.append(key, data[key]);
     }
     // formData.append('image', data.image);
-    axios.post('http://localhost:8080/staffRegister',formData, {
+    axios.post('https://airport-system-api-p7mk.onrender.com/staffRegister',formData, {
       headers: {
         
       }
@@ -18,14 +18,14 @@ const addStaff = async (data) => {
 };
 
 const removeStaff = async (id) => {
-    axios.delete(`http://localhost:8080/staffLogout/${id}`);
+    axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout/${id}`);
 };
 
 export const cancelTicket = createAsyncThunk(
     'staff/cancelTicket',
     async (data) => {
         try {
-            await axios.put(`http://localhost:8080/api/cancelFlight/${data.passengerId}`);
+            await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
             return data;
         } catch (error) {
             console.error('Error during cancel ticket:', error);
@@ -39,8 +39,8 @@ export const findData = createAsyncThunk(
 
         const endpoint =
             loginData.role === 'passenger'
-                ? 'http://localhost:8080/api/passengerLogin'
-                : 'http://localhost:8080/staffLogin';
+                ? 'https://airport-system-api-p7mk.onrender.com/api/passengerLogin'
+                : 'https://airport-system-api-p7mk.onrender.com/staffLogin';
 
         try {
             const response = await axios.post(endpoint, loginData);

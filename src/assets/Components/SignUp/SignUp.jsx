@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { setStaff } from '../../Slices/staffSlice';
 import { usercontext } from '../../Context/usercontext';
 import { staffcontext } from '../../Context/staffcontext';
-import { setUser } from '../../Slices/userSlice';
+import { addData } from '../../Slices/userSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,8 +25,7 @@ export default function SignUp() {
     password: "",
     email: "",
     phone: "",
-    gender: "",
-    image: ""
+    gender: ""
   });
   // `data:${state.imgContentType};base64,${state.imagedetail}`
 
@@ -63,17 +62,19 @@ export default function SignUp() {
             </div>
           </div>
           <form className='w-[100%] h-[100%] z-10 p-5'
-            onSubmit={() => {
+            onSubmit={async(e) => {
+              e.preventDefault();
               if (role === 'passenger') {
                 console.log("passenger dispatcher running......");
-                dispatch(setUser(userData));
+                alert("passenger dispatcher running......");
+                await dispatch(addData(userData));
                 setPassenger(userData);
                 navigate('/Signin');
                 toast.success("Registered successfully as Passenger");
               } else {
                 const upadatedUserData = { ...userData, role: role };
                 setstaff(upadatedUserData);
-                dispatch(setStaff(upadatedUserData));
+                await dispatch(setStaff(upadatedUserData));
                 navigate('/Signin');
               }
             }}>

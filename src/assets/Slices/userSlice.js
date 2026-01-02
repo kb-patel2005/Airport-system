@@ -2,29 +2,35 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const addData = async (data) => {
-    try {
-        const formData = new FormData();
-        for (const key in data) {
-            formData.append(key, data[key]);
+export const addData = createAsyncThunk(
+    'user/addData',
+    async (data) => {
+        try {
+            console.log("Inside addData thunk:", data);
+            const pass = new FormData();
+            pass.append("username", data.username);
+            pass.append("password", data.password);
+            pass.append("gender", data.gender);
+            pass.append("email", data.email);
+            pass.append("phone", data.phone);
+            pass.append("image", data.image);
+            await axios.post("https://airport-system-api-p7mk.onrender.com/api/addPassenger", pass, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            return data;
+        } catch (error) {
+            alert("Error adding data:", error);
+            console.error("Error adding data:", error);
+            return error;
         }
-        axios.post('http://localhost:8080/api/addPassenger', formData, {
-            headers: {
-
-            }
-        });
-        console.log("Data added successfully:", response.data);
-    } catch (error) {
-        console.error("Error adding data:", error);
-        throw error;
     }
-};
+);
 
 export const updateSeatNo = createAsyncThunk(
     'user/updateSeatNo',
     async (data) => {
         try {
-            const response = await axios.put("http://localhost:8080/api/addFlight", data);
+            const response = await axios.put("https://airport-system-api-p7mk.onrender.com/api/addFlight", data);
             return response.data;
         } catch (error) {
             console.error('Error during add flight:', error);
@@ -33,11 +39,11 @@ export const updateSeatNo = createAsyncThunk(
 );
 
 const removeData = async (id) => {
-    await axios.delete(`http://localhost:8080/deletePassenger/${id}`);
+    await axios.delete(`https://airport-system-api-p7mk.onrender.com/deletePassenger/${id}`);
 };
 
 const fetchData = async (loginData) => {
-    const response = await axios.post('http://localhost:8080/passengerLogin', loginData);
+    const response = await axios.post('https://airport-system-api-p7mk.onrender.com/api/passengerLogin', loginData);
     const data = response.json();
     console.log(data);
     return data;
@@ -47,9 +53,6 @@ export const userSlice = createSlice({
     name: "user",
     initialState: { user: null, flight: {}, loading: true, error: null },
     reducers: {
-        setUser(state, action) {
-            addData(action.payload);
-        },
         clearUser(state, action) {
             removeData(action.payload);
         },
@@ -69,6 +72,18 @@ export const userSlice = createSlice({
                 // state.flight = action.payload.flight;
             })
             .addCase(updateSeatNo.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(addData.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addData.fulfilled, (state, action) => {
+                state.loading = false;
+                console.log("Data added successfully:", action.payload);
+            })
+            .addCase(addData.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });

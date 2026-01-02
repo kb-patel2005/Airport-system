@@ -27,7 +27,7 @@ const StreamingFlights = () => {
         return;
       }
 
-      axios.get(`http://localhost:8080/allFlights?page=${page}&size=${pageSize}`)
+      axios.get(`https://airport-system-api-p7mk.onrender.com/allFlights?page=${page}&size=${pageSize}`)
         .then(res => {
           const newData = res.data.content;
           setFlights(prev => [...prev, ...newData]);

@@ -6,30 +6,30 @@ export const addFlight = createAsyncThunk(
     "flight/addFlight",
     async(data,{getState,dispatch})=>{
         dispatch(setPassengerSeat(data.seatNo));
-        await axios.post('http://localhost:8080/addFlight', data);
+        await axios.post('https://airport-system-api-p7mk.onrender.com/addFlight', data);
     }
 );
 
 export const updateFlight = createAsyncThunk(
     "flight/updateFlight",
     async(data)=>{
-        await axios.put('http://localhost:8080/updateFlight', data);
+        await axios.put('https://airport-system-api-p7mk.onrender.com/updateFlight', data);
     }
 );
 
 const removeFlight = async (id) => {
-    axios.delete(`http://localhost:8080/deleteFlight/${id}`);
+    axios.delete(`https://airport-system-api-p7mk.onrender.com/deleteFlight/${id}`);
 };
 
 const fetchFlight = async (id) => {
-    const response = await axios.get(`http://localhost:8080/flight/${id}`);
+    const response = await axios.get(`https://airport-system-api-p7mk.onrender.com/flight/${id}`);
     const data = response.data;
     return data;
 };
 
 const fetchAllFlights = async () => {
     try {
-        const response = await axios.get('http://localhost:8080/allFlights');
+        const response = await axios.get('https://airport-system-api-p7mk.onrender.com/allFlights');
         const data = response.data;
         return data;
     } catch (error) {
