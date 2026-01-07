@@ -25,7 +25,8 @@ export const cancelTicket = createAsyncThunk(
     'staff/cancelTicket',
     async (data) => {
         try {
-            await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
+            // await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
+            // await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
             return data;
         } catch (error) {
             console.error('Error during cancel ticket:', error);

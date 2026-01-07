@@ -38,39 +38,15 @@ export default function FlightSeats() {
                 <button
                     className="bg-sky-500 cursor-pointer hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300"
                     onClick={async () => {
-                        //no change in passenger only update flight
-                        // await dispatch(updateFlight({
-                        //     ...flightData,
-                        //     bussinessClass: JSON.stringify(bseat),
-                        //     economicClass: JSON.stringify(eseat)
-                        // }));
-                        // await dispatch(updateFlight({
-                        //     flight: {
-                        //         ...flightData,
-                        //         bussinessClass: JSON.stringify(bseat),
-                        //         economicClass: JSON.stringify(eseat)
-                        //     },
-                        //     passenger: selector.passenger.passportNumber
-                        // }));
-
-                        //update passenger and flight in local slice
-                        dispatch(setFlightToPassenger({
-                            seatno: `${mySeat[0] + 1}${mySeat[1] + 1}${mySeat[2]}`,
-                            flight: {
-                                ...flightData,
-                                bussinessClass: JSON.stringify(bseat),
-                                economicClass: JSON.stringify(eseat)
-                            }
-                        }));
                         console.log(selector.passenger);
                         await dispatch(updateSeatNo({
-                            passengerId: (selector.passenger).passportNumber,
-                            flight: {
-                                ...flightData,
-                                bussinessClass: JSON.stringify(bseat),
-                                economicClass: JSON.stringify(eseat)
-                            },
+                            passengerId: selector.passenger.passportNumber,
+                            flight: {...flightData,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)},
                             seatNo: `${mySeat[0] + 1}${mySeat[1] + 1}${mySeat[2]}`
+                        }));
+                        dispatch(setFlightToPassenger({
+                            seatno: `${mySeat[0] + 1}${mySeat[1] + 1}${mySeat[2]}`,
+                            flight: {...flightData,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)}
                         }));
                         navig('/');
                     }}

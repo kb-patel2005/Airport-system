@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { cancelTicket, deleteflightfrompassenger } from '../../Slices/staffSlice';
 import { updateFlight } from '../../Slices/flightSlice';
 import { useNavigate } from 'react-router-dom';
+import { updateSeatNo } from '../../Slices/userSlice';
 
 export default function PassengerFlight() {
 
@@ -47,13 +48,23 @@ export default function PassengerFlight() {
                                         if (fclass === 'B') {
                                             const bus = JSON.parse(flight.bussinessClass);
                                             bus[i - 1][j - 1] = 0;
-                                            dispatch(updateFlight({ ...flight, bussinessClass: JSON.stringify(bus) }));
+                                            dispatch(updateSeatNo(
+                                                {
+                                                    flight:null,
+                                                    passengerId: passenger.passportNumber,
+                                                    seatNo: null
+                                                }));
                                         } else {
                                             const eco = JSON.parse(flight.economicClass);
                                             eco[i - 1][j - 1] = 0;
-                                            dispatch(updateFlight({ ...flight, economicClass: JSON.stringify(eco) }));
+                                            dispatch(updateSeatNo(
+                                                {
+                                                    flight:null,
+                                                    passengerId: passenger.passportNumber,
+                                                    seatNo: null
+                                                }));
                                         }
-                                        await dispatch(cancelTicket({ passengerId: passenger.passportNumber }));
+                                        // await dispatch(cancelTicket({ passengerId: passenger.passportNumber }));
                                         dispatch(deleteflightfrompassenger(passenger));
                                         alert('Ticket cancelled successfully');
                                     }}

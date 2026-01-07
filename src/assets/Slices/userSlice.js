@@ -30,8 +30,9 @@ export const updateSeatNo = createAsyncThunk(
     'user/updateSeatNo',
     async (data) => {
         try {
-            const response = await axios.put("https://airport-system-api-p7mk.onrender.com/api/addFlight", data);
-            return response.data;
+            await axios.put("https://airport-system-api-p7mk.onrender.com/api/addFlight", data);
+            //  await axios.put("http://localhost:8080/api/addFlight", data);
+            return data;
         } catch (error) {
             console.error('Error during add flight:', error);
         }
@@ -68,8 +69,7 @@ export const userSlice = createSlice({
             })
             .addCase(updateSeatNo.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("Flight added successfully:", action.payload, state);
-                // state.flight = action.payload.flight;
+                state.flight = action.payload.flight;
             })
             .addCase(updateSeatNo.rejected, (state, action) => {
                 state.loading = false;
