@@ -2,13 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const addStaff = async (data) => {
-    // const { image, ...otherData } = data;
     console.log(data.image);
     const formData = new FormData();
     for (const key in data) {
         formData.append(key, data[key]);
     }
-    // formData.append('image', data.image);
     axios.post('https://airport-system-api-p7mk.onrender.com/staffRegister',formData, {
       headers: {
         
@@ -20,18 +18,6 @@ const addStaff = async (data) => {
 const removeStaff = async (id) => {
     axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout/${id}`);
 };
-
-export const cancelTicket = createAsyncThunk(
-    'staff/cancelTicket',
-    async (data) => {
-        try {
-            // await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
-            // await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelFlight/${data.passengerId}`);
-            return data;
-        } catch (error) {
-            console.error('Error during cancel ticket:', error);
-        }
-    });
 
 export const findData = createAsyncThunk(
     'staff/findData',

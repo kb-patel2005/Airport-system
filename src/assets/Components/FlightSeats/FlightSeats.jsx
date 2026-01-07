@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { updateFlight } from '../../Slices/flightSlice';
 import { updateSeatNo } from '../../Slices/userSlice';
 import { setFlightToPassenger } from '../../Slices/staffSlice';
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { cancelTicket, deleteflightfrompassenger } from '../../Slices/staffSlice';
-import { updateFlight } from '../../Slices/flightSlice';
+import { deleteflightfrompassenger } from '../../Slices/staffSlice';
 import { useNavigate } from 'react-router-dom';
 import { updateSeatNo } from '../../Slices/userSlice';
 
@@ -15,9 +14,6 @@ export default function PassengerFlight() {
 
     return (
         <div className='relative'>
-
-            
-
             <div className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden m-auto">
                 <div className="absolute text-center">
                 <svg width="350" height="700" viewBox="0 0 1273 951" fill="none" xmlns="http://www.w3.org/2000/svg">

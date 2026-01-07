@@ -10,28 +10,9 @@ export const addFlight = createAsyncThunk(
     }
 );
 
-export const updateFlight = createAsyncThunk(
-    "flight/updateFlight",
-    async (data) => {
-        await axios.put('https://airport-system-api-p7mk.onrender.com/updateFlight', data);
-    }
-);
-
 const removeFlight = async (id) => {
     axios.delete(`https://airport-system-api-p7mk.onrender.com/deleteFlight/${id}`);
 };
-
-const detetepflight = async (id, fclass, flight, i, j, passenger) => {
-    if (fclass === 'B') {
-        const bus = JSON.parse(flight.bussinessClass);
-        bus[i - 1][j - 1] = 0;
-        axios.post('https://airport-system-api-p7mk.onrender.com/updateFlight', {flight : { ...flight, bussinessClass: JSON.stringify(bus) }, passenger : passenger.passportNumber});
-    } else {
-        const eco = JSON.parse(flight.economicClass);
-        eco[i - 1][j - 1] = 0;
-        axios.post('https://airport-system-api-p7mk.onrender.com/updateFlight', {flight : { ...flight, economicClass: JSON.stringify(eco) }, passenger : passenger.passportNumber});
-    }
-}
 
 const fetchFlight = async (id) => {
     const response = await axios.get(`https://airport-system-api-p7mk.onrender.com/flight/${id}`);
