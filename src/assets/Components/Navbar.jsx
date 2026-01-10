@@ -1,8 +1,8 @@
-import React ,{ useState, useEffect, useContext , Suspense} from 'react';
+import React ,{ useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
-const VscMenu = React.lazy(() => import('react-icons/vsc').then(module => ({ default: module.VscMenu })));
-const GoX = React.lazy(() => import('react-icons/go').then(module => ({ default: module.GoX })));
-const AiOutlineUser = React.lazy(() => import('react-icons/ai').then(module => ({ default: module.AiOutlineUser })));
+import { VscMenu } from 'react-icons/vsc';
+import { GoX } from 'react-icons/go';
+import { AiOutlineUser } from 'react-icons/ai';
 import { usercontext } from '../Context/usercontext';
 import { staffcontext } from '../Context/staffcontext';
 
@@ -29,7 +29,7 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    <Suspense fallback={<></>}>
+    
     <div className='flex justify-between items-center p-5 w-full relative'
       style={{ background: 'linear-gradient(180deg, #99cbe6, transparent)' }}>
       {/* Logo */}
@@ -137,6 +137,6 @@ export default function Navbar() {
         </ul>
       </div>
     </div>
-    </Suspense>
+
   );
 }
