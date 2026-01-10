@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteflightfrompassenger } from '../../Slices/staffSlice';
+import { deleteflightfrompassenger } from '../Slices/staffSlice';
 import { useNavigate } from 'react-router-dom';
-import { updateSeatNo } from '../../Slices/userSlice';
+import { updateSeatNo } from '../Slices/userSlice';
 
 export default function PassengerFlight() {
 

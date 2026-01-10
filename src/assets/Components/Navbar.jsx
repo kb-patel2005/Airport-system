@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { VscMenu } from 'react-icons/vsc';
 import { GoX } from 'react-icons/go';
 import { AiOutlineUser } from "react-icons/ai";
-import { usercontext } from '../../Context/usercontext';
-import { staffcontext } from '../../Context/staffcontext';
+import { usercontext } from '../Context/usercontext';
+import { staffcontext } from '../Context/staffcontext';
 
 export default function Navbar() {
 

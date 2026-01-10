@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Animation = React.lazy(() => import('./Animation'));
-const Ourfeature = React.lazy(() => import('../Ourfeature'));
+const Ourfeature = React.lazy(() => import('./Ourfeature'));
 
 export default function Home() {
 

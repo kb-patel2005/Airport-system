@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { flightRoutes } from '../flightRotes';
-import { addFlight } from '../../Slices/flightSlice';
+import { flightRoutes } from './flightRotes';
+import { addFlight } from '../Slices/flightSlice';
 
 export default function FlightAdd() {
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { usercontext } from '../../Context/usercontext';
+import { usercontext } from '../Context/usercontext';
 import { useNavigate } from 'react-router-dom';
 
 

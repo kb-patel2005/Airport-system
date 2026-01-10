@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { setStaff } from '../../Slices/staffSlice';
-import { usercontext } from '../../Context/usercontext';
-import { staffcontext } from '../../Context/staffcontext';
-import { addData } from '../../Slices/userSlice';
+import { setStaff } from '../Slices/staffSlice';
+import { usercontext } from '../Context/usercontext';
+import { staffcontext } from '../Context/staffcontext';
+import { addData } from '../Slices/userSlice';
 
 
 export default function SignUp() {

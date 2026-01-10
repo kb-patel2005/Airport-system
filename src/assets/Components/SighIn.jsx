@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { findData } from '../../Slices/staffSlice';
-import { usercontext } from '../../Context/usercontext';
-import { staffcontext } from '../../Context/staffcontext';
+import { findData } from '../Slices/staffSlice';
+import { usercontext } from '../Context/usercontext';
+import { staffcontext } from '../Context/staffcontext';
 
 
 export default function SighIn() {
