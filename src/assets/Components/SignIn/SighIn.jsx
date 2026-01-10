@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { getmember } from '../../Slices/staffSlice';
 import { findData } from '../../Slices/staffSlice';
 import { usercontext } from '../../Context/usercontext';
 import { staffcontext } from '../../Context/staffcontext';
@@ -59,7 +58,6 @@ export default function SighIn() {
               if (Object.keys(result.payload).length === 0) {
                 navigate('/signin');
               } else {
-                toast.success("Logged in successfully");
                 if (data.role === 'passenger') {
                   setPassenger(result.payload);
                   navigate('/flights', { state: { passenger: result } });
@@ -119,10 +117,10 @@ export default function SighIn() {
               className="bg-gray-500 text-white text-xl rounded p-3 w-full max-w-[500px] hover:bg-gray-600 transition"
             />
 
-            <p className="text-[17px] text-center">
-              Don't have an account?{" "}
+            <p className="text-center">
+              Don't have an account?
               <span className="text-blue-500 underline cursor-pointer text-xl">
-                <Link to="/signup">Sign Up</Link>
+                <Link to="/signup">  Sign Up</Link>
               </span>
             </p>
           </div>

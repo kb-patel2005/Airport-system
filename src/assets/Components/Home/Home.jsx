@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Animation = React.lazy(() => import('./Animation'));
-import { Suspense } from 'react';
 const Ourfeature = React.lazy(() => import('../Ourfeature'));
 
 export default function Home() {
@@ -26,7 +25,7 @@ export default function Home() {
         </div>
       </section>
       <Suspense fallback={<></>}><Animation /></Suspense>
-      <Suspense fallback={<h1>Our Features</h1>}><Ourfeature /></Suspense>
+      <Suspense fallback={<p>Our Features</p>}><Ourfeature /></Suspense>
     </div>
   )
 }

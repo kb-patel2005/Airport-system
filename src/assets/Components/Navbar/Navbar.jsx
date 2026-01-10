@@ -2,6 +2,7 @@ import { useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { VscMenu } from 'react-icons/vsc';
 import { GoX } from 'react-icons/go';
+import { AiOutlineUser } from "react-icons/ai";
 import { usercontext } from '../../Context/usercontext';
 import { staffcontext } from '../../Context/staffcontext';
 
@@ -78,9 +79,12 @@ export default function Navbar() {
               }
               }
             >
-              <img src={Object.keys(data).length === 0 ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175` : `data:image/jpeg;base64,${data.image}`}
+              {
+                Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>
+              }
+              {/* <img src={Object.keys(data).length === 0 ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175` : `data:image/jpeg;base64,${data.image}`}
                 className='h-[100%] w-[100%] object-cover'
-                alt='' />
+                alt="" /> */}
             </div>
           </div>
 
@@ -102,9 +106,9 @@ export default function Navbar() {
                 setShow(!show);
             }
             }>
-            <img src={Object.keys(data).length === 0 ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175" : `data:image/jpeg;base64,${data.image}`}
-              className='h-[100%] w-[100%] object-cover'
-              alt='' />
+            {
+                Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>
+              }
             </div>
 
           {
