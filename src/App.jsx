@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import Navbar from './assets/Components/Navbar/Navbar'
+import Navbar from './assets/Components/Navbar'
 import { Outlet } from 'react-router-dom'
 import { usercontext } from './assets/Context/usercontext'
 import { staffcontext } from './assets/Context/staffcontext'
