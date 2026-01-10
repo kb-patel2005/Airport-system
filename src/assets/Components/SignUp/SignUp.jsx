@@ -5,8 +5,6 @@ import { setStaff } from '../../Slices/staffSlice';
 import { usercontext } from '../../Context/usercontext';
 import { staffcontext } from '../../Context/staffcontext';
 import { addData } from '../../Slices/userSlice';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function SignUp() {
@@ -27,7 +25,6 @@ export default function SignUp() {
     phone: "",
     gender: ""
   });
-  // `data:${state.imgContentType};base64,${state.imagedetail}`
 
   const handleRole = (e) => {
     setRole(e.target.value);
@@ -65,12 +62,10 @@ export default function SignUp() {
             onSubmit={async(e) => {
               e.preventDefault();
               if (role === 'passenger') {
-                console.log("passenger dispatcher running......");
                 alert("passenger dispatcher running......");
                 await dispatch(addData(userData));
                 setPassenger(userData);
                 navigate('/Signin');
-                toast.success("Registered successfully as Passenger");
               } else {
                 const upadatedUserData = { ...userData, role: role };
                 setstaff(upadatedUserData);

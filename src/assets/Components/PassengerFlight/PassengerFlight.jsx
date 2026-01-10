@@ -60,7 +60,7 @@ export default function PassengerFlight() {
                                                     seatNo: null
                                                 }));
                                         }
-                                        // await dispatch(cancelTicket({ passengerId: passenger.passportNumber }));
+                                        await dispatch(cancelTicket({ passengerId: passenger.passportNumber }));
                                         dispatch(deleteflightfrompassenger(passenger));
                                         alert('Ticket cancelled successfully');
                                     }}

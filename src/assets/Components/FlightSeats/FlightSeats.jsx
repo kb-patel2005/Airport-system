@@ -9,7 +9,6 @@ export default function FlightSeats() {
     const selector = useSelector(state => state.staff);
     const dispatch = useDispatch();
     const location = useLocation();
-    const [flightData, setFlightData] = useState({ ...location.state });
     const [bseat, setBseat] = useState([]);
     const [eseat, setEseat] = useState([]);
     const [mySeat, setMySeat] = useState([]);
@@ -18,8 +17,8 @@ export default function FlightSeats() {
 
     useEffect(() => {
         selector.passenger.seatno != null ? setHaveSeat(true) : setHaveSeat(false);
-        setBseat(JSON.parse(flightData.bussinessClass));
-        setEseat(JSON.parse(flightData.economicClass));
+        setBseat(JSON.parse(location.state.bussinessClass));
+        setEseat(JSON.parse(location.state.economicClass));
     }, []);
 
     const updateSeat = (row, col, value, func) => {
@@ -37,15 +36,14 @@ export default function FlightSeats() {
                 <button
                     className="bg-sky-500 cursor-pointer hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300"
                     onClick={async () => {
-                        console.log(selector.passenger);
                         await dispatch(updateSeatNo({
                             passengerId: selector.passenger.passportNumber,
-                            flight: {...flightData,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)},
+                            flight: {...location.state,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)},
                             seatNo: `${mySeat[0] + 1}${mySeat[1] + 1}${mySeat[2]}`
                         }));
                         dispatch(setFlightToPassenger({
                             seatno: `${mySeat[0] + 1}${mySeat[1] + 1}${mySeat[2]}`,
-                            flight: {...flightData,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)}
+                            flight: {...location.state,bussinessClass: JSON.stringify(bseat),economicClass: JSON.stringify(eseat)}
                         }));
                         navig('/');
                     }}

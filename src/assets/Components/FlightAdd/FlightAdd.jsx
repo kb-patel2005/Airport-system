@@ -3,9 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { flightRoutes } from '../flightRotes';
 import { addFlight } from '../../Slices/flightSlice';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 export default function FlightAdd() {
 
@@ -26,11 +23,9 @@ export default function FlightAdd() {
 
     const allcountry = flightRoutes.map(e => e.from.country);
     const uniquecountry = [...new Set(allcountry)];
-    console.log(uniquecountry);
 
     const state = flightRoutes.filter(e => e.from.country == data.origincountry);
     const dstate = flightRoutes.filter(e => e.from.country == data.destinationcountry);
-    console.log(state);
 
     const city = flightRoutes.filter(e => e.from.state == data.originstate);
     const dcity = flightRoutes.filter(e => e.from.state == data.destinationstate);
@@ -103,10 +98,8 @@ export default function FlightAdd() {
                     onSubmit={async () => {
                         try {
                             await dispatch(addFlight(data));
-                            toast.success("Flight Added Successfully");
                         } catch (error) {
                             console.error("Error adding flight:", error);
-                            toast.error("Failed to add flight. Please try again.");
                         }
                     }}
                     className='w-[100%] h-[100%] p-5'>
@@ -233,8 +226,6 @@ export default function FlightAdd() {
                             className='border-2 border-black rounded-md p-2 max-w-[500px] w-[100%]'
                             required />
 
-                        {/* <button className='bg-blue-500 text-white p-3 rounded-md w-[70%] max-w-[500px] text-xl hover:bg-red-300/50'>Sign In</button> */}
-
                         <input type="submit" name='submit' value='submit' className='bg-gray-500 w-[100%] max-w-[500px] p-2 rounded text-xl text-white' />
                     </div>
                 </form>
@@ -242,25 +233,3 @@ export default function FlightAdd() {
         </div>
     )
 }
-
-// [
-//   "Delhi",
-//   "Mumbai",
-//   "Bengaluru",
-//   "Hyderabad",
-//   "Chennai",
-//   "Kolkata",
-//   "Ahmedabad",
-//   "Kochi",
-//   "Goa",
-//   "Pune",
-//   "Jaipur",
-//   "Lucknow",
-//   "Patna",
-//   "Bhubaneswar",
-//   "Amritsar",
-//   "Indore",
-//   "Coimbatore",
-//   "Trivandrum",
-//   "Varanasi"
-// ]

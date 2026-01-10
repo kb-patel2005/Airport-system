@@ -5,13 +5,10 @@ import { getmember } from '../../Slices/staffSlice';
 import { findData } from '../../Slices/staffSlice';
 import { usercontext } from '../../Context/usercontext';
 import { staffcontext } from '../../Context/staffcontext';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function SighIn() {
 
-  const passengerData = useSelector((state) => state.staff);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {passenger , setPassenger} = useContext(usercontext);
@@ -64,9 +61,7 @@ export default function SighIn() {
               } else {
                 toast.success("Logged in successfully");
                 if (data.role === 'passenger') {
-                  console.log("Passenger logged in:", result.payload);
                   setPassenger(result.payload);
-                  toast.success("Logged in successfully as Passenger");
                   navigate('/flights', { state: { passenger: result } });
                 } else if (data.role === 'admin') {
                   setstaff(result.payload);

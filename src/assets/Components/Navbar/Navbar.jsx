@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext, use } from 'react';
+import { useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
-import { ImAirplane } from 'react-icons/im';
 import { VscMenu } from 'react-icons/vsc';
 import { GoX } from 'react-icons/go';
 import { usercontext } from '../../Context/usercontext';
@@ -63,7 +62,7 @@ export default function Navbar() {
       >
         <ul className='p-5 sm:p-0 flex flex-col sm:flex-row gap-4 z-50'>
           {/* Close Icon */}
-          <span className='cursor-pointer sm:hidden font-bold'>
+          <span className='cursor-pointer sm:hidden'>
             <GoX
               style={{ fontSize: '25px', color: 'black' , fontWeight: 'bold'}}
               onClick={() => setMenuOpen(false)}
@@ -106,8 +105,7 @@ export default function Navbar() {
             <img src={Object.keys(data).length === 0 ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175" : `data:image/jpeg;base64,${data.image}`}
               className='h-[100%] w-[100%] object-cover'
               alt='' />
-            {/* {`data:image/jpeg;base64,${user.image}`} */}
-          </div>
+            </div>
 
           {
             show ? (
