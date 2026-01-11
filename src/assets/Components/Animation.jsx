@@ -1,10 +1,7 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import Spline from '@splinetool/react-spline';
 
 export default function Animation () {
-useEffect(() => {
-    console.log("Animation lazy component mounted at:", performance.now());
-  }, []);
 
   return (
     <>

@@ -66,27 +66,16 @@ export default function Navbar() {
         <ul className='p-5 sm:p-0 flex flex-col sm:flex-row gap-4 z-50'>
           {/* Close Icon */}
           <span className='cursor-pointer sm:hidden'>
-            <GoX
-              style={{ fontSize: '25px', color: 'black' , fontWeight: 'bold'}}
-              onClick={() => setMenuOpen(false)}
-            />
+            <GoX style={{ fontSize: '25px', color: 'black' , fontWeight: 'bold'}}
+              onClick={() => setMenuOpen(false)}/>
           </span>
 
           {/* Links */}
 
           <div className='sm:hidden w-[100%] items-center flex justify-center'>
             <div className='flex sm:hidden w-[50%] h-[100%] min-h-[100px] rounded-[50%] border border-black ml-4 cursor-pointer overflow-hidden justify-center items-center'
-              onClick={() => {
-                Object.keys(data).length === 0 ? setShow(false) : setShow(!show);
-              }
-              }
-            >
-              {
-                Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>
-              }
-              {/* <img src={Object.keys(data).length === 0 ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175` : `data:image/jpeg;base64,${data.image}`}
-                className='h-[100%] w-[100%] object-cover'
-                alt="" /> */}
+              onClick={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}>
+              {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>}
             </div>
           </div>
 
@@ -96,28 +85,14 @@ export default function Navbar() {
           <li className='py-3 sm:p-2'><Link to="/passengerFlight" className='py-5 sm:p-2 text-blue-700 font-bold'>booking</Link></li>
           <li className='py-3 sm:p-2'><Link to="/signin" className='py-5 sm:p-2 text-blue-700 font-bold'>Sign In</Link></li>
           <div className='hidden sm:flex w-[40px] h-[40px] rounded-[50%] border border-black ml-4 cursor-pointer overflow-hidden justify-center items-center'
-            onMouseEnter={() => {
-              const notuser = Object.keys(data).length === 0;
-              notuser ? setShow(false) :
-                setShow(!show);
-            }
-            }
-            onMouseLeave={() => {
-              const notuser = Object.keys(data).length === 0;
-              notuser ? setShow(false) :
-                setShow(!show);
-            }
-            }>
-            {
-                Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>
-              }
-            </div>
+            onMouseEnter={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}
+            onMouseLeave={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}>
+            {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>}
+          </div>
 
-          {
-            show ? (
-              <div
-                style={{ width: "max-content" }}
-                className="px-10 py-5 object-cover bg-blue-800 rounded-[33px] shadow-[7px_7px_4px_0px_rgba(0,0,0,0.25)] outline outline-1 outline-offset-[-1px] outline-zinc-400 inline-flex justify-center items-center gap-2.5 position absolute top-20 right-10 z-50 bg-white">
+          {show ? (
+              <div style={{ width: "max-content" }}
+                className="px-10 py-5 object-cover rounded-[33px] shadow-[7px_7px_4px_0px_rgba(0,0,0,0.25)] outline-offset-[-1px] outline-zinc-400 inline-flex justify-center items-center gap-2.5 position absolute top-20 right-10 z-50 bg-white">
                 <div className=" inline-flex flex-col justify-start items-center gap-3">
                   <div className='self-end text-2xl cursor-pointer' onClick={() => setShow(false)}><GoX /></div>
                   <div className="inline-flex justify-start items-center gap-2.5">
@@ -132,11 +107,9 @@ export default function Navbar() {
                     <div className="self-stretch justify-start text-black  font-medium ">Gender: {data.gender}</div>
                   </div>
                 </div>
-              </div>) : ""
-          }
+              </div>) : ""}
         </ul>
       </div>
     </div>
-
   );
 }

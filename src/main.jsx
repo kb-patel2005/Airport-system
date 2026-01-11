@@ -34,13 +34,8 @@ const routes = createBrowserRouter([
 
 const root = createRoot(document.getElementById('root'));
 
-const start = performance.now();
-
 root.render(
   <Provider store={store}>
     <RouterProvider router={routes} />
   </Provider>
 );
-
-const end = performance.now();
-console.log(`React app render time: ${end - start} ms`);
