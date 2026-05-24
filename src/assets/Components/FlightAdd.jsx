@@ -95,8 +95,9 @@ export default function FlightAdd() {
         <div className='w-screen h-[70vh] flex justify-center items-center'>
             <div className='flex justify-center items-center w-[90%] h-[80%] max-w-[750px] border-2 border-black rounded-lg shadow-lg shadow-gray-400'>
                 <form
-                    onSubmit={async () => {
+                    onSubmit={async (e) => {
                         try {
+                            e.preventDefault();
                             await dispatch(addFlight(data));
                         } catch (error) {
                             console.error("Error adding flight:", error);

@@ -13,6 +13,7 @@ import SignUp from './assets/Components/SignUp.jsx'
 import FlightAdd from './assets/Components/FlightAdd.jsx'
 import PassengerFlight from './assets/Components/PassengerFlight.jsx'
 import FlightSeats from './assets/Components/FlightSeats.jsx'
+import FlightDetail from './assets/Components/FlightDetail.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const routes = createBrowserRouter([
       { path: '/Signup', element: <SignUp /> },
       { path: '/AddFlight', element: <FlightAdd /> },
       { path: '/passengerFlight', element: <PassengerFlight /> },
-      { path: '/flightSeats', element: <FlightSeats /> }
+      { path: '/FlightSeats', element: <FlightSeats /> },
+      { path: '/flightDetail', element: <FlightDetail/>}
     ],
   }
 ]);

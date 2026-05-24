@@ -33,7 +33,6 @@ export const findData = createAsyncThunk(
             const response = await axios.post(endpoint, loginData);
             return { ...response.data };
         } catch (error) {
-            console.error('Error during login:', error);
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
         }
 
@@ -56,7 +55,7 @@ export const staffSlice = createSlice({
         setPassengerSeat(state, action) {
             state.passenger = {...state.passenger , seatno: action.payload};
         },
-        deleteflightfrompassenger(state, action) {
+        deleteflightfrompassenger(state) {
             state.passenger = {...state.passenger , flight: null , seatno: null};
         }
     },

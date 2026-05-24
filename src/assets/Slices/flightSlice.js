@@ -44,6 +44,9 @@ export const flightSlice = createSlice({
             state.flightInfo = action.payload;
             state.isFlightAdded = true;
         },
+        setFlightInfo(state, action){
+            state.flightInfo = action.payload;
+        },
         clearFlight(state, action) {
             removeFlight(action.payload);
         },
@@ -77,5 +80,5 @@ export const flightSlice = createSlice({
     },
 });
 
-export const { setFlight, clearFlight, getFlight, getallflights } = flightSlice.actions;
+export const { setFlight, clearFlight, getFlight, getallflights, setFlightInfo } = flightSlice.actions;
 export default flightSlice.reducer;

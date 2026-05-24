@@ -6,7 +6,6 @@ export const addData = createAsyncThunk(
     'user/addData',
     async (data) => {
         try {
-            console.log("Inside addData thunk:", data);
             const pass = new FormData();
             pass.append("username", data.username);
             pass.append("password", data.password);
@@ -20,7 +19,6 @@ export const addData = createAsyncThunk(
             return data;
         } catch (error) {
             alert("Error adding data:", error);
-            console.error("Error adding data:", error);
             return error;
         }
     }
@@ -30,11 +28,10 @@ export const updateSeatNo = createAsyncThunk(
     'user/updateSeatNo',
     async (data) => {
         try {
-            await axios.put("https://airport-system-api-p7mk.onrender.com/api/addFlight", data);
-            //  await axios.put("http://localhost:8080/api/addFlight", data);
+            await axios.put("https://airport-system-api-p7mk.onrender.com/api/bookFlight", data);
             return data;
         } catch (error) {
-            console.error('Error during add flight:', error);
+            console.error('Error during book flight:', error);
         }
     }
 );
@@ -46,7 +43,6 @@ const removeData = async (id) => {
 const fetchData = async (loginData) => {
     const response = await axios.post('https://airport-system-api-p7mk.onrender.com/api/passengerLogin', loginData);
     const data = response.json();
-    console.log(data);
     return data;
 };
 
@@ -69,7 +65,6 @@ export const userSlice = createSlice({
             })
             .addCase(updateSeatNo.fulfilled, (state, action) => {
                 state.loading = false;
-                state.flight = action.payload.flight;
             })
             .addCase(updateSeatNo.rejected, (state, action) => {
                 state.loading = false;
@@ -81,7 +76,6 @@ export const userSlice = createSlice({
             })
             .addCase(addData.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("Data added successfully:", action.payload);
             })
             .addCase(addData.rejected, (state, action) => {
                 state.loading = false;
