@@ -31,7 +31,7 @@ const PassengerFlight = ({ passengerId }) => {
 
   return (
     <div>
-      <div className="text-4xl font-bold text-center mb-5 text-indigo-700">My Bookings</div>
+      <div className="text-xl font-bold text-center mb-5 text-indigo-700">My Bookings</div>
       {bookings.map((booking) => (
         <div
           key={booking.bookingId}
