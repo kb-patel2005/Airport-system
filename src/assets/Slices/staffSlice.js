@@ -35,9 +35,7 @@ export const findData = createAsyncThunk(
                 : 'https://airport-system-api-p7mk.onrender.com/auth/staffLogin';
 
         try {
-            const response = await axios.post(endpoint, loginData, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            const response = await axios.post(endpoint, loginData);
             return { ...response.data };
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
