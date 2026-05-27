@@ -28,10 +28,16 @@ export const updateSeatNo = createAsyncThunk(
     'user/updateSeatNo',
     async (data) => {
         try {
-            const response = await axios.put("https://airport-system-api-p7mk.onrender.com/api/bookFlight", data, {
-                headers: { "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            const response = await axios.put(
+                "https://airport-system-api-p7mk.onrender.com/api/bookFlight",
+                data,
+                {
+                    headers: {
+                        "Content-Type":"application/json",
+                        Authorization:`Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
             return response.data;
         } catch (error) {
             console.error('Error during book flight:', error);

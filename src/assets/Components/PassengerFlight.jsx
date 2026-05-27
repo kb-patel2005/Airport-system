@@ -9,7 +9,7 @@ const PassengerFlight = ({ passengerId }) => {
   const passenger = useSelector(state => state.staff.passenger);
 
   useEffect(() => {
-    axios.get(`https://airport-system-api-p7mk.onrender.com/api/passengerSeats/${passenger.id}`, {
+    axios.get(`https://airport-system-api-p7mk.onrender.com/api/passengerSeats`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
