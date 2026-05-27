@@ -99,7 +99,7 @@ export default function FlightSeats() {
 
     const handleBookSeat = async () => {
         if (mySeats.length === 0) return;
-
+        alert(selector.passenger.passengerId);
         await dispatch(updateSeatNo({
             passengerId: selector.passenger.id,
             flight: { ...flight },
