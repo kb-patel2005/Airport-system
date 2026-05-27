@@ -86,7 +86,7 @@ export const staffSlice = createSlice({
                         state.staff = action.payload;
                         state.role = action.payload.role;
                     } else {
-                        state.passenger = action.payload;
+                        state.passenger = action.payload.passenger;
                         state.role = action.payload.role;
                     }
                 }
