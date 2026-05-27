@@ -42,7 +42,7 @@ export default function FlightSeats() {
 
     useEffect(() => {
         axios
-            .get(`https://airport-system-api-p7mk.onrender.com/${flight.id}/seats`)
+            .get(`https://airport-system-api-p7mk.onrender.com/public/${flight.id}/seats`)
             .then((res) => setSeat(res.data))
             .catch((err) => console.log(err));
 

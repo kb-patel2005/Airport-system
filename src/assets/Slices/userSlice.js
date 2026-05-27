@@ -13,10 +13,10 @@ export const addData = createAsyncThunk(
             pass.append("email", data.email);
             pass.append("phone", data.phone);
             pass.append("image", data.image);
-            await axios.post("https://airport-system-api-p7mk.onrender.com/api/addPassenger", pass, {
+            const response = await axios.post("https://airport-system-api-p7mk.onrender.com/auth/addPassenger", pass, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
-            return data;
+            return response.data;
         } catch (error) {
             alert("Error adding data:", error);
             return error;
@@ -28,8 +28,11 @@ export const updateSeatNo = createAsyncThunk(
     'user/updateSeatNo',
     async (data) => {
         try {
-            await axios.put("https://airport-system-api-p7mk.onrender.com/api/bookFlight", data);
-            return data;
+            const response = await axios.put("https://airport-system-api-p7mk.onrender.com/api/bookFlight", data, {
+                headers: { "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+            return response.data;
         } catch (error) {
             console.error('Error during book flight:', error);
         }
@@ -37,12 +40,16 @@ export const updateSeatNo = createAsyncThunk(
 );
 
 const removeData = async (id) => {
-    await axios.delete(`https://airport-system-api-p7mk.onrender.com/deletePassenger/${id}`);
+    await axios.delete(`https://airport-system-api-p7mk.onrender.com/api/deletePassenger`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
 };
 
 const fetchData = async (loginData) => {
-    const response = await axios.post('https://airport-system-api-p7mk.onrender.com/api/passengerLogin', loginData);
-    const data = response.json();
+    const response = await axios.post('https://airport-system-api-p7mk.onrender.com/auth/passengerLogin', loginData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+    const data = response.data;
     return data;
 };
 

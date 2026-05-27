@@ -64,7 +64,7 @@ export default function SignUp() {
               if (role === 'passenger') {
                 alert("passenger dispatcher running......");
                 await dispatch(addData(userData));
-                setPassenger(userData);
+                setPassenger(result.payload.passenger);
                 navigate('/Signin');
               } else {
                 const upadatedUserData = { ...userData, role: role };

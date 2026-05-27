@@ -6,7 +6,9 @@ export const addFlight = createAsyncThunk(
     "flight/addFlight",
     async (data, { getState, dispatch }) => {
         dispatch(setPassengerSeat(data.seatNo));
-        await axios.post('https://airport-system-api-p7mk.onrender.com/addFlight', data);
+        await axios.post('https://airport-system-api-p7mk.onrender.com/auth/addFlight', data, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
     }
 );
 
@@ -22,7 +24,7 @@ const fetchFlight = async (id) => {
 
 const fetchAllFlights = async () => {
     try {
-        const response = await axios.get('https://airport-system-api-p7mk.onrender.com/allFlights');
+        const response = await axios.get('https://airport-system-api-p7mk.onrender.com/public/allFlights');
         const data = response.data;
         return data;
     } catch (error) {

@@ -20,7 +20,7 @@ const StreamingFlights = () => {
     const fetchPage = async () => {
       try {
         const res = await axios.get(
-          `https://airport-system-api-p7mk.onrender.com/allFlights?page=${page}&size=${pageSize}`
+          `https://airport-system-api-p7mk.onrender.com/public/allFlights?page=${page}&size=${pageSize}`
         );
 
         console.log('Fetched flights:', res.data);

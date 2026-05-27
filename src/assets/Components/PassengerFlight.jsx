@@ -9,16 +9,28 @@ const PassengerFlight = ({ passengerId }) => {
   const passenger = useSelector(state => state.staff.passenger);
 
   useEffect(() => {
-    axios.get(`https://airport-system-api-p7mk.onrender.com/api/passengerSeats/${passenger.id}`).then((res) => setBookings(res.data))
+    axios.get(`https://airport-system-api-p7mk.onrender.com/api/passengerSeats/${passenger.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then((res) => setBookings(res.data))
   }, []);
 
   const cancelSeat = async (id) => {
-    await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBookedSeat/${id}`).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
+    await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBookedSeat/${id}`, null, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
     successDelete ? setBookings((prev) => prev.filter((s) => s.id !== id)) : "";
   }
 
   const cancelTicket = async (id) => {
-    await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBooking`, [String(id)]).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
+    await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBooking`, [String(id)], {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
   }
 
   const totalPrice = (seats) => {

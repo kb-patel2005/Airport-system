@@ -7,16 +7,21 @@ const addStaff = async (data) => {
     for (const key in data) {
         formData.append(key, data[key]);
     }
-    axios.post('https://airport-system-api-p7mk.onrender.com/staffRegister',formData, {
+     const response = await axios.post('https://airport-system-api-p7mk.onrender.com/auth/staffRegister',formData, {
       headers: {
         
       }
     });
     alert("Staff added successfully");
+
+    return response.data;
 };
 
 const removeStaff = async (id) => {
-    axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout/${id}`);
+    const response = await axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout`,{
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } 
+    });
+    return response.data;
 };
 
 export const findData = createAsyncThunk(
@@ -26,11 +31,13 @@ export const findData = createAsyncThunk(
 
         const endpoint =
             loginData.role === 'passenger'
-                ? 'https://airport-system-api-p7mk.onrender.com/api/passengerLogin'
-                : 'https://airport-system-api-p7mk.onrender.com/staffLogin';
+                ? 'https://airport-system-api-p7mk.onrender.com/auth/passengerLogin'
+                : 'https://airport-system-api-p7mk.onrender.com/auth/staffLogin';
 
         try {
-            const response = await axios.post(endpoint, loginData);
+            const response = await axios.post(endpoint, loginData, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
             return { ...response.data };
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -44,10 +51,14 @@ export const staffSlice = createSlice({
     initialState: { staff: null, passenger: {}, role: null, loading: true, error: null },
     reducers: {
         setStaff(state, action) {
-            addStaff(action.payload);
+            const result = addStaff(action.payload);
+            state.staff = result.staff;
+            localStorage.setItem('token', result.token);
         },
         clearStaff(state, action) {
-            removeStaff(action.payload);
+            const result = removeStaff(action.payload);
+            state.staff = result.staff;
+            localStorage.removeItem('token');
         },
         setFlightToPassenger(state, action) {
             state.passenger = {...state.passenger ,seatno: action.payload.seatno, flight: action.payload.flight};

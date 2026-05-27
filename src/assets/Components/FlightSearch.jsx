@@ -96,7 +96,7 @@ export default function FlightSearch() {
         let totalPagesFetched = null;
         while (!cancel && (totalPagesFetched === null || currentPage < totalPagesFetched)) {
           const res = await axios.get(
-            `https://airport-system-api-p7mk.onrender.com/allFlights?page=${currentPage}&size=${pageSize}`
+            `https://airport-system-api-p7mk.onrender.com/public/allFlights?page=${currentPage}&size=${pageSize}`
           );
           setFlights((prev) => [...prev, ...res.data.content]);
           totalPagesFetched = res.data.totalPages;

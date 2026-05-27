@@ -32,7 +32,6 @@ export default function SighIn() {
     <div className="w-screen min-h-[70vh] flex justify-center items-center px-4">
       <div className="relative w-full max-w-[750px] h-[80vh] border-black rounded-lg shadow-lg shadow-gray-400 overflow-hidden flex justify-center items-center">
 
-        {/* Background gradient circles */}
         <div className="absolute inset-0 pointer-events-none -z-10 opacity-30">
           <div className="relative w-full h-[100%] max-w-[1000px] mx-auto overflow-hidden ">
             <div className="absolute w-40 h-40 sm:w-60 sm:h-60 top-[2%] left-[0%] rotate-[-1deg] bg-gradient-to-b from-cyan-200 to-blue-400 rounded-full" />
@@ -44,7 +43,6 @@ export default function SighIn() {
           </div>
         </div>
 
-        {/* Form content */}
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -54,13 +52,16 @@ export default function SighIn() {
                 navigate('/signin');
               } else {
                 if (data.role === 'passenger') {
-                  setPassenger(result.payload);
+                  setPassenger(result.payload.passenger);
+                  localStorage.setItem('token', result.payload.token);
                   navigate('/flights', { state: { passenger: result } });
                 } else if (data.role === 'admin') {
-                  setstaff(result.payload);
+                  setstaff(result.payload.staff);
+                  localStorage.setItem('token', result.payload.token);
                   navigate('/AddFlight', { state: { admin: result } });
                 } else {
-                  setstaff(result.payload);
+                  setstaff(result.payload.staff);
+                  localStorage.setItem('token', result.payload.token);
                   navigate('/about', { state: { staff: result } });
                 }
               }
