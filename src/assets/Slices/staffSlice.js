@@ -36,7 +36,7 @@ export const findData = createAsyncThunk(
 
         try {
             const response = await axios.post(endpoint, loginData);
-            return { ...response.data };
+            return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
         }
