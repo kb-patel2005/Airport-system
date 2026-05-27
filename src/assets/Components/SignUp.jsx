@@ -63,7 +63,7 @@ export default function SignUp() {
               e.preventDefault();
               if (role === 'passenger') {
                 alert("passenger dispatcher running......");
-                await dispatch(addData(userData));
+                const result = await dispatch(addData(userData));
                 setPassenger(result.payload.passenger);
                 navigate('/Signin');
               } else {
