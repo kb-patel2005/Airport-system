@@ -79,11 +79,11 @@ export default function Navbar() {
             </div>
           </div>
 
-          <li className='py-3 sm:p-2'><Link to="/" className='py-5 sm:p-2 text-blue-700 font-bold'>Home</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/about" className='py-5 sm:p-2 text-blue-700 font-bold'>About</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/flights" className='py-5 sm:p-2 text-blue-700 font-bold'>Flight</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className='py-5 sm:p-2 text-blue-700 font-bold'>booking</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/signin" className='py-5 sm:p-2 text-blue-700 font-bold'>Sign In</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/about" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>About</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/flights" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Flight</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>booking</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/signin" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Sign In</Link></li>
           <div className='hidden sm:flex w-[40px] h-[40px] rounded-[50%] border border-black ml-4 cursor-pointer overflow-hidden justify-center items-center'
             onMouseEnter={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}
             onMouseLeave={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}>

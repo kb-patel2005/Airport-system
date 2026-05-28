@@ -5,7 +5,7 @@ import { setStaff } from '../Slices/staffSlice';
 import { usercontext } from '../Context/usercontext';
 import { staffcontext } from '../Context/staffcontext';
 import { addData } from '../Slices/userSlice';
-
+import { gsap } from 'gsap';
 
 export default function SignUp() {
 
@@ -44,10 +44,15 @@ export default function SignUp() {
     )
   }
 
+  gsap.fromTo(".animate", { opacity: 0,x: 0, y: 800 }, { opacity: 1, x: 0, y: 0, duration: 0.8});
+  gsap.fromTo("form", { opacity: 0, x: 0 , y: 250}, { opacity: 1,x: 0,y: 0, duration: 0.8, delay: 0.3});
+
   return (
     <div>
-      <div className='flex justify-center items-center w-full'>
-        <div className='relative flex  flex-col justify-center items-center min-w-[350px] py-4 px-5 w-[650px] h-[80%] rounded-2xl shadow-lg shadow-gray-400'>
+      <div className='flex justify-center items-center w-full flex-col'>
+      <div className="sm:text-6xl text-4xl mx-auto animate -rotate-45">✈️</div>
+
+        <div className='relative flex  flex-col justify-center items-center min-w-[350px] py-4 px-5 w-[100%] max-w-[750px] h-[80%] rounded-2xl shadow-lg shadow-gray-400'>
           <div className="absolute inset-0 pointer-events-none -z-10 opacity-30">
             <div className="relative w-full h-[100%] max-w-[1000px] mx-auto overflow-hidden ">
               <div className="absolute w-40 h-40 sm:w-60 sm:h-60 top-[2%] left-[0%] rotate-[-1deg] bg-gradient-to-b from-cyan-200 to-blue-400 rounded-full" />
@@ -73,7 +78,7 @@ export default function SignUp() {
                 navigate('/Signin');
               }
             }}>
-            <div className='flex flex-col justify-center items-center h-[100%] gap-5'>
+            <div className='flex flex-col justify-center items-center h-[100%]  gap-5'>
               <div className='flex flex-col items-center'>
 
                 <h1 className='text-xl sm:text-2xl font-extrabold mb-2 text-indigo-700'>Create your account</h1>

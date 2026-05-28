@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { findData } from '../Slices/staffSlice';
 import { usercontext } from '../Context/usercontext';
 import { staffcontext } from '../Context/staffcontext';
+import { gsap } from 'gsap';
 
 
 export default function SighIn() {
@@ -28,8 +29,12 @@ export default function SighIn() {
     setData({ ...data, [name]: value });
   }
 
+  gsap.fromTo(".animate", { opacity: 0,x: -800, y: 800 }, { opacity: 1, x: 0, y: 0, duration: 0.8});
+  gsap.fromTo("form", { opacity: 0, x: -250 , y: 250}, { opacity: 1,x: 0,y: 0, duration: 0.8, delay: 0.3});
+
   return (
-    <div className="w-screen min-h-[70vh] flex justify-center items-center px-4">
+    <div className="w-full min-h-[70vh] flex flex-col justify-center items-center">
+      <div className="text-6xl w-[100%] mx-auto max-w-[750px] text-end animate">✈️</div>
       <div className="relative w-full max-w-[750px] h-[80vh] border-black rounded-lg shadow-lg shadow-gray-400 overflow-hidden flex justify-center items-center">
 
         <div className="absolute inset-0 pointer-events-none -z-10 opacity-30">
@@ -123,6 +128,7 @@ export default function SighIn() {
           </div>
         </form>
       </div>
+      
     </div>
   )
 }
