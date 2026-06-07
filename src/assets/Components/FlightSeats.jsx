@@ -141,6 +141,7 @@ export default function FlightSeats() {
 
     return (
         <div className='w-full max-w-[800px] mx-auto'>
+            <title>flight seat selection area</title>
             <Popup
                 isVisible={paySucess}
                 onClose={() => {

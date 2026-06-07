@@ -3,7 +3,7 @@ import axios from 'axios';
 import { usercontext } from '../Context/usercontext';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setFlightInfo , getFlight } from '../Slices/flightSlice.js';
+import { setFlightInfo, getFlight } from '../Slices/flightSlice.js';
 
 const StreamingFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -48,7 +48,28 @@ const StreamingFlights = () => {
   }, [flag, totalPages, page]);
 
   return (
-    <div>
+    <>
+      <title>All Flights Dashboard | Airport System</title>
+      <meta
+        name="description"
+        content="View all flights in one place. Track schedules, seat availability, bookings, cancellations, and live updates with Airport System's dashboard."
+      />
+
+      {/* Open Graph */}
+      <meta property="og:title" content="All Flights Dashboard | Airport System" />
+      <meta property="og:description" content="Centralized flight dashboard with live seat updates, booking management, and real-time tracking." />
+      <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
+      <meta property="og:url" content="https://airportsystem.netlify.app/dashboard" />
+      <meta property="og:type" content="website" />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="All Flights Dashboard | Airport System" />
+      <meta name="twitter:description" content="Manage flights, bookings, cancellations, and live seat updates in one dashboard." />
+      <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
+
+      {/* Canonical */}
+      <link rel="canonical" href="https://airportsystem.netlify.app/dashboard" />
       <div className="text-3xl text-center font-extrabold">Available Flights</div>
       <br />
       <div className="flex gap-4 flex-wrap">
@@ -73,7 +94,7 @@ const StreamingFlights = () => {
                       Flight No: #{flight.id}
                     </p>
                   </div>
-                    <div className="w-full ml-8 lg:w-auto flex flex-col items-stretch gap-3">
+                  <div className="w-full ml-8 lg:w-auto flex flex-col items-stretch gap-3">
                     <button
                       className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-semibold"
                       onClick={async () => {
@@ -135,9 +156,9 @@ const StreamingFlights = () => {
                   <div className="bg-green-100 text-green-700 px-4 py-1 ml-8 rounded-2xl">
                     <div className="text-sm">price</div>
                     <div className="text-lg font-bold">₹{flight.basePrice.toLocaleString()}</div>
-                    
-                  </div> 
-                 
+
+                  </div>
+
                 </div>
               </div>
 
@@ -148,7 +169,7 @@ const StreamingFlights = () => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

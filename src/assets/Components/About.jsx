@@ -2,9 +2,28 @@ import React from 'react';
 
 const About = () => {
   return (
-
     <div className="min-h-screen text-gray-800 flex flex-col items-center">
-      {/* Hero Section */}
+      <>
+        <title>About Us | Airport System</title>
+        <meta
+          name="description"
+          content="Learn more about Airport System — a modern flight booking platform with live seat updates, cancellations, and real-time flight tracking."
+        />
+
+        <meta property="og:title" content="About Us | Airport System" />
+        <meta property="og:description" content="Discover how Airport System helps passengers book seats, cancel bookings, and track flights live with seamless updates." />
+        <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
+        <meta property="og:url" content="https://airportsystem.netlify.app/about" />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us | Airport System" />
+        <meta name="twitter:description" content="Airport System offers real-time flight booking, seat management, and live tracking updates." />
+        <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
+
+        <link rel="canonical" href="https://airportsystem.netlify.app/about" />
+      </>
+
       <section className="flex flex-col items-center justify-center py-20 text-center w-full max-w-[1080px]">
         <h1 className="text-5xl font-bold text-blue-900 animate-bounce">
           SkyConnect Airport Services

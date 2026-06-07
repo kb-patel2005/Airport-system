@@ -10,6 +10,24 @@ export default function Home() {
   const selector = useSelector(state => state.staff);
   return (
     <div className="relative min-h-screen text-gray-800 flex flex-col items-center w-[100%]"  >
+      <title>Book Flights Online | Live Seat Updates & Tracking</title>
+      <meta
+        name="description"
+        content="Book and cancel flight seats instantly with live tracking. See real-time seat availability, manage bookings, and enjoy seamless updates on your flights."
+      />
+
+      <meta property="og:title" content="Book Flights Online | Live Seat Updates & Tracking" />
+      <meta property="og:description" content="Real-time flight booking system with seat management, cancellations, and live tracking updates." />
+      <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
+      <meta property="og:url" content="https://airportsystem.netlify.app/" />
+      <meta property="og:type" content="website" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Book Flights Online | Live Seat Updates & Tracking" />
+      <meta name="twitter:description" content="Book seats, cancel bookings, and track flights live with real-time updates." />
+      <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
+
+      <link rel="canonical" href="https://airportsystem.netlify.app/" />
 
       <section className="w-[100%] mx-auto flex flex-col items-center justify-center py-24" style={{ background: 'linear-gradient(#00000000, rgb(153, 203, 230))' }}>
         <div className='z-20 w-[65%] mx-auto'>
@@ -17,7 +35,7 @@ export default function Home() {
           <p className="mt-3 text-sm">Experience seamless booking, personalized seat selection, and 24 × 7 support — all in one place.</p>
           <div className="mt-10 flex gap-6">
             <button className="px-8 py-4 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-              { selector.passenger === null || selector.passenger === undefined ? <Link to="/Signup">Get Started</Link> : <Link to="/AddFlight">Add Flight</Link>}
+              {selector.passenger === null || selector.passenger === undefined ? <Link to="/Signup">Get Started</Link> : <Link to="/AddFlight">Add Flight</Link>}
             </button>
             <button className="px-8 py-4 bg-white text-blue-600 rounded-lg shadow-lg hover:bg-gray-100 transition transform hover:scale-105">
               <Link to="/flights">Browse Flights →</Link>
@@ -27,9 +45,9 @@ export default function Home() {
       </section>
 
       {/* <Suspense fallback={<></>}><Animation /></Suspense> */}
-     
+
       <Suspense fallback={<p>Our Features</p>}><Ourfeature /></Suspense>
-      
+
     </div>
   )
 }
