@@ -6,7 +6,7 @@ export const addFlight = createAsyncThunk(
     "flight/addFlight",
     async (data, { getState, dispatch }) => {
         dispatch(setPassengerSeat(data.seatNo));
-        await axios.post('https://airport-system-api-p7mk.onrender.com/auth/addFlight', data, {
+        await axios.post('https://airport-system-api-p7mk.onrender.com/addFlight', data, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
     }
@@ -16,8 +16,17 @@ const removeFlight = async (id) => {
     axios.delete(`https://airport-system-api-p7mk.onrender.com/deleteFlight/${id}`);
 };
 
+export const getFlight = createAsyncThunk(
+    "flight/getFlight",
+    async (id) => {
+        const response = await axios.get(`https://airport-system-api-p7mk.onrender.com/public/flight/${id}`);
+        const data = response.data;
+        console.log('Fetched flight info:', data);
+        return response.data;
+    });
+
 const fetchFlight = async (id) => {
-    const response = await axios.get(`https://airport-system-api-p7mk.onrender.com/flight/${id}`);
+    const response = await axios.get(`https://airport-system-api-p7mk.onrender.com/public/flight/${id}`);
     const data = response.data;
     return data;
 };
@@ -39,33 +48,24 @@ export const getAllFlightsThunk = () => async (dispatch) => {
 
 export const flightSlice = createSlice({
     name: "flight",
-    initialState: { flights: [], flightInfo: [], bussinessSeat: [], ecomomicsSeat: [], isFlightAdded: false },
+    initialState: { flights: [], flightInfo: [], scheduleId: "", isFlightAdded: false },
     reducers: {
         setFlight(state, action) {
             addFlight(action.payload);
             state.flightInfo = action.payload;
             state.isFlightAdded = true;
         },
-        setFlightInfo(state, action){
+        setFlightInfo(state, action) {
             state.flightInfo = action.payload;
         },
         clearFlight(state, action) {
             removeFlight(action.payload);
         },
-        getFlight(state, action) {
-            const flight = fetchFlight(action.payload);
-            if (flight) {
-                state.flightInfo = flight;
-                state.bussinessSeat = JSON.parse(flight.bussinessClass);
-                state.ecomomicsSeat = JSON.parse(flight.economicClass);
-                return flight;
-            } else {
-                state.flightInfo = null;
-                return null;
-            }
-        },
         getallflights(state, action) {
             state.flights = action.payload;
+        },
+        setSchduleId(state,action) {
+            state.scheduleId = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -79,8 +79,11 @@ export const flightSlice = createSlice({
             .addCase(addFlight.pending, (state) => {
                 state.isFlightAdded = false;
             })
+            .addCase(getFlight.fulfilled, (state, action) => {
+                state.flightInfo = action.payload;
+            })
     },
 });
 
-export const { setFlight, clearFlight, getFlight, getallflights, setFlightInfo } = flightSlice.actions;
+export const { setFlight, clearFlight, getallflights, setFlightInfo, setSchduleId } = flightSlice.actions;
 export default flightSlice.reducer;

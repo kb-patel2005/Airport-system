@@ -34,23 +34,32 @@ export default function FlightSeats() {
     const selector = useSelector(state => state.staff);
     const dispatch = useDispatch();
     const flight = useSelector(state => state.flight.flightInfo);
+    const scheduleId = useSelector(state => state.flight.scheduleId);
     const [seat, setSeat] = useState([]);
     const [mySeats, setMySeats] = useState([]);
     const navig = useNavigate();
     const [totalPrice, setTotalPrice] = useState(0);
     const [paySucess, setPaySucess] = useState(false);
 
-    useEffect(() => {
-        axios
-            .get(`https://airport-system-api-p7mk.onrender.com/public/${flight.id}/seats`)
-            .then((res) => setSeat(res.data))
+    const getSeats = async () => {
+        await axios
+            .get(`https://airport-system-api-p7mk.onrender.com/public/${scheduleId}/seats`)
+            .then((res) => {
+                localStorage.setItem("seats",res.data)
+                setSeat([...res.data]);})
             .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        if (!scheduleId) return;
+        alert(scheduleId)
+        getSeats();
 
         const client = new Client({
             webSocketFactory: () => new SockJS("https://airport-system-api-p7mk.onrender.com/ws"),
             reconnectDelay: 5000,
             onConnect: () => {
-                client.subscribe(`/topic/messages/${flight.id}`, (msg) => {
+                client.subscribe(`/topic/messages/${scheduleId}`, (msg) => {
                     const { seats, isbooked } = JSON.parse(msg.body);
                     setSeat((prev) => {
                         const newSeats = prev.map((row) => [...row]);
@@ -68,7 +77,7 @@ export default function FlightSeats() {
         return () => {
             client.deactivate();
         };
-    }, [flight.id]);
+    }, [scheduleId, flight.id]);
 
     function seatToIndex(seatCode) {
         const colLetter = seatCode.charAt(0);
@@ -85,15 +94,12 @@ export default function FlightSeats() {
         if (seat[i][j] === true) return; // already booked
 
         const seatNumber = `${String.fromCharCode(65 + j)}${i + 1}`;
-        const isSelected = mySeats.find(s => s.seatNumber === seatNumber);
+        const isSelected = mySeats.find(s => s === seatNumber);
 
         if (isSelected) {
-            setMySeats(prev => prev.filter(s => s.seatNumber !== seatNumber));
+            setMySeats(prev => prev.filter(s => s != seatNumber));
         } else {
-            setMySeats([...mySeats, {
-                seatNumber,
-                isBooked: false
-            }]);
+            setMySeats([...mySeats, seatNumber]);
         }
     };
 
@@ -102,7 +108,8 @@ export default function FlightSeats() {
         await dispatch(updateSeatNo({
             passengerId: selector.passenger.id,
             flight: { ...flight },
-            seats: mySeats.map(s => ({ ...s, isBooked: true }))
+            seatNumbers : mySeats,
+            scheduleId : scheduleId,
         }));
 
         setSeat(prev =>
@@ -120,12 +127,12 @@ export default function FlightSeats() {
 
     const calculateTotalPrice = () => {
         let total = 0;
-        const seatPrice = flight.price;
+        const seatPrice = flight.basePrice;
         if (mySeats.length === 0) {
             return 0;
         }
         mySeats.forEach(s => {
-            let seatType = parseInt(s.seatNumber.slice(1)) <= 6 ? 'business' : 'economy';
+            let seatType = parseInt(s.slice(1)) <= 6 ? 'business' : 'economy';
             let price = seatType == 'business' ? parseFloat(seatPrice * 1.5) : parseInt(seatPrice);
             total = total + price;
         });
@@ -224,7 +231,7 @@ export default function FlightSeats() {
                                     <div className="flex justify-center my-1">
                                         {row.map((seatVal, j) => {
                                             const seatNumber = `${String.fromCharCode(65 + j)}${i + 1}`;
-                                            const isSelected = mySeats.find(s => s.seatNumber === seatNumber);
+                                            const isSelected = mySeats.find(s => s === seatNumber);
 
                                             return (
                                                 <div
@@ -237,10 +244,10 @@ export default function FlightSeats() {
                                                         className="seat w-[35px] h-[35px] rounded flex items-center justify-center font-bold text-xs"
                                                         style={{
                                                             backgroundColor: seatVal === true || seatVal == "1"
-                                                                ? "green"   // booked
+                                                                ? "green"  
                                                                 : isSelected
-                                                                    ? "orange" // selected
-                                                                    : "lightgray" // available
+                                                                    ? "orange" 
+                                                                    : "lightgray" 
                                                         }}
                                                     >
                                                         {seatNumber}
@@ -260,7 +267,7 @@ export default function FlightSeats() {
                         <div className='text-lg text-indigo-700 font-bold'>Selected seats</div>
                         <div className='flex flex-col gap-6 mt-6'>
                             <div>{
-                                mySeats.length > 0 ? mySeats.map((seat) => (<span className='text-2xl text-indigo-400 font-bold p-2 rounded-full bg-white shadow-2xl mr-2'>{seat.seatNumber}</span>)) : <div className='text-2xl font-bold text-gray-400'>No seat available</div>
+                                mySeats.length > 0 ? mySeats.map((seat) => (<span className='text-2xl text-indigo-400 font-bold p-2 rounded-full bg-white shadow-2xl mr-2'>{seat}</span>)) : <div className='text-2xl font-bold text-gray-400'>No seat available</div>
                             }</div>
                             <div className='flex flex-col gap-3'>
                                 <div>
@@ -294,14 +301,14 @@ export default function FlightSeats() {
                                 <div>
                                     <p className="text-gray-400 text-sm">Economic class seat price</p>
                                     <p className="font-semibold text-green-600 mt-1">
-                                        {flight.price}
+                                        {flight.basePrice}
                                     </p>
                                 </div>
 
                                 <div>
                                     <p className="text-gray-400 text-sm">Bussiness class seat price</p>
                                     <p className="font-semibold text-green-600 mt-1">
-                                        {flight.price * 1.5}
+                                        {flight.basePrice * 1.5}
                                     </p>
                                 </div>
 

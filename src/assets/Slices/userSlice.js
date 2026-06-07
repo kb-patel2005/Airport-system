@@ -33,7 +33,6 @@ export const updateSeatNo = createAsyncThunk(
                 data,
                 {
                     headers: {
-                        "Content-Type":"application/json",
                         Authorization:`Bearer ${localStorage.getItem("token")}`
                     }
                 }

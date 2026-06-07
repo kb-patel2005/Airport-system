@@ -4,7 +4,7 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headl
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setFlightInfo } from '../Slices/flightSlice';
+import { getFlight, setFlightInfo } from '../Slices/flightSlice';
 
 const people = [
   { id: 1, name: 'Durward Reynolds' },
@@ -87,6 +87,7 @@ export default function FlightSearch() {
   const [searchResults, setSearchResults] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [myFlight, setMyFlight] = useState(null);
 
   useEffect(() => {
     let cancel = false;
@@ -131,6 +132,10 @@ export default function FlightSearch() {
     setSearchResults(results);
   };
 
+  const fetchFlight = async (id) => {
+
+  } 
+
   return (
     <div className="flex flex-col mx-auto gap-5 p-6 shadow-2xl rounded-2xl w-fit bg-blue-100">
       
@@ -173,7 +178,7 @@ export default function FlightSearch() {
               <button
                 className='bg-indigo-700 text-white w-[100%] p-1.5 rounded mt-3'
                 onClick={async () => {
-                  await dispatch(setFlightInfo(flight));
+                  await dispatch(getFlight(flight.id));
                   navigate('/flightDetail');
                 }}
               >Book flight</button>

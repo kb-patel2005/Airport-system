@@ -14,10 +14,10 @@ export default function Home() {
       <section className="w-[100%] mx-auto flex flex-col items-center justify-center py-24" style={{ background: 'linear-gradient(#00000000, rgb(153, 203, 230))' }}>
         <div className='z-20 w-[65%] mx-auto'>
           <p className="text-3xl sm:text-5xl font-extrabold text-blue-900">Welcome to SkyConnect ✈️</p>
-          <p className="mt-3 text-sm">Experience seamless booking, personalized seat selection, and 24×7 support — all in one place.</p>
+          <p className="mt-3 text-sm">Experience seamless booking, personalized seat selection, and 24 × 7 support — all in one place.</p>
           <div className="mt-10 flex gap-6">
             <button className="px-8 py-4 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-              {Object.keys(selector.passenger).length === 0 || selector.passenger === null || selector.passenger === undefined ? <Link to="/signup">Get Started</Link> : <Link to="/AddFlight">Add Flight</Link>}
+              { selector.passenger === null || selector.passenger === undefined ? <Link to="/Signup">Get Started</Link> : <Link to="/AddFlight">Add Flight</Link>}
             </button>
             <button className="px-8 py-4 bg-white text-blue-600 rounded-lg shadow-lg hover:bg-gray-100 transition transform hover:scale-105">
               <Link to="/flights">Browse Flights →</Link>

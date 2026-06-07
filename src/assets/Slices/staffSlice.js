@@ -2,24 +2,31 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const addStaff = async (data) => {
-    console.log(data.image);
     const formData = new FormData();
-    for (const key in data) {
-        formData.append(key, data[key]);
-    }
-     const response = await axios.post('https://airport-system-api-p7mk.onrender.com/auth/staffRegister',formData, {
-      headers: {
-        
-      }
-    });
-    alert("Staff added successfully");
 
+    formData.append("username", data.username);
+    formData.append("password", data.password);
+    formData.append("gender", data.gender);
+    formData.append("role", data.role);
+    formData.append("phone", data.phone);
+    formData.append("email", data.email);
+
+    formData.append("image", data.image);
+
+    const response = await axios.post(
+        "https://airport-system-api-p7mk.onrender.com/auth/staffRegister",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    alert("Staff added successfully");
     return response.data;
 };
 
+
 const removeStaff = async (id) => {
-    const response = await axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout`,{
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } 
+    const response = await axios.delete(`https://airport-system-api-p7mk.onrender.com/staffLogout`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
     return response.data;
 };
@@ -59,13 +66,16 @@ export const staffSlice = createSlice({
             localStorage.removeItem('token');
         },
         setFlightToPassenger(state, action) {
-            state.passenger = {...state.passenger ,seatno: action.payload.seatno, flight: action.payload.flight};
+            state.passenger = { ...state.passenger, seatno: action.payload.seatno, flight: action.payload.flight };
         },
         setPassengerSeat(state, action) {
-            state.passenger = {...state.passenger , seatno: action.payload};
+            state.passenger = { ...state.passenger, seatno: action.payload };
         },
         deleteflightfrompassenger(state) {
-            state.passenger = {...state.passenger , flight: null , seatno: null};
+            state.passenger = { ...state.passenger, flight: null, seatno: null };
+        },
+        setRole(state, action) {
+            state.role = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -98,5 +108,5 @@ export const staffSlice = createSlice({
     }
 });
 
-export const { setStaff, clearStaff, getmember, setPassengerSeat, deleteflightfrompassenger, setFlightToPassenger } = staffSlice.actions;
+export const { setStaff, clearStaff, getmember, setPassengerSeat, deleteflightfrompassenger, setFlightToPassenger, setRole } = staffSlice.actions;
 export default staffSlice.reducer;

@@ -1,7 +1,7 @@
 import React, { useContext, useState , useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { findData } from '../Slices/staffSlice';
+import { findData, setRole } from '../Slices/staffSlice';
 import { usercontext } from '../Context/usercontext';
 import { staffcontext } from '../Context/staffcontext';
 import { Suspense } from 'react';
@@ -61,18 +61,22 @@ export default function SighIn() {
               try {
                 const result = await dispatch(findData(data));
                 if (Object.keys(result.payload).length === 0) {
-                  navigate('/signin');
+                  navigate('/Signin');
                 } else {
                   if (data.role === 'passenger') {
                     setPassenger(result.payload.passenger);
+                    dispatch(setRole('passenger'));
                     localStorage.setItem('token', result.payload.token);
                     navigate('/flights', { state: { passenger: result } });
                   } else if (data.role === 'admin') {
                     setstaff(result.payload.staff);
+                    alert("admin login successfully");
+                    dispatch(setRole('admin'));
                     localStorage.setItem('token', result.payload.token);
                     navigate('/AddFlight', { state: { admin: result } });
                   } else {
                     setstaff(result.payload.staff);
+                    dispatch(setRole('staff'));
                     localStorage.setItem('token', result.payload.token);
                     navigate('/about', { state: { staff: result } });
                   }

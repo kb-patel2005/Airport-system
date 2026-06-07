@@ -14,16 +14,41 @@ const PassengerFlight = ({ passengerId }) => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }).then((res) => setBookings(res.data))
+
+    console.log(bookings)
+
   }, []);
 
-  const cancelSeat = async (id) => {
-    await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBookedSeat/${id}`, null, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    }).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
-    successDelete ? setBookings((prev) => prev.filter((s) => s.id !== id)) : "";
-  }
+  const cancelSeat = async (seatId, bookingId) => {
+    try {
+      await axios.put(
+        `https://airport-system-api-p7mk.onrender.com/api/cancelBookedSeat/${seatId}?bookingId=${bookingId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+
+      // Update local state: mark seat as cancelled inside the booking
+      setBookings((prev) =>
+        prev.map((booking) =>
+          booking.bookingId === bookingId
+            ? {
+              ...booking,
+              bookedSeats: booking.bookedSeats.map((seat) =>
+                seat.id === seatId ? { ...seat, status: "CANCELLED" } : seat
+              )
+            }
+            : booking
+        )
+      );
+    } catch (err) {
+      alert("Something went wrong");
+    }
+  };
+
 
   const cancelTicket = async (id) => {
     await axios.put(`https://airport-system-api-p7mk.onrender.com/api/cancelBooking`, [String(id)], {
@@ -31,6 +56,7 @@ const PassengerFlight = ({ passengerId }) => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }).then((res) => setSuccessDelete(true)).catch((res) => alert('something went wrong'));
+    setBookings((prev) => prev.filter((s) => s.bookingId !== id))
   }
 
   const totalPrice = (seats) => {
@@ -110,20 +136,22 @@ const PassengerFlight = ({ passengerId }) => {
 
                 <div className="bg-slate-100 rounded-2xl p-4">
                   <div className="text-sm text-slate-500">Departure</div>
-                  <div className="font-semibold text-slate-800 mt-1">
-                    10:30 pm
+                  <div >
+                    <div className="font-semibold text-slate-800 mt-1">{booking.schedule.departureTime.toLocaleString().slice(0, 10)}</div>
+                    <div className="text-sm font-normal">{booking.schedule.departureTime.toLocaleString().slice(11, 16)}</div>
                   </div>
                 </div>
 
                 <div className="bg-slate-100 rounded-2xl p-4">
                   <div className="text-sm text-slate-500">Arrival</div>
-                  <div className="font-semibold text-slate-800 mt-1">
-                    11:30 am
+                  <div>
+                    <div className="font-semibold text-slate-800 mt-1">{booking.schedule.arrivalTime.toLocaleString().slice(0, 10)}</div>
+                    <div className="text-sm font-normal">{booking.schedule.arrivalTime.toLocaleString().slice(11, 16)}</div>
                   </div>
                 </div>
 
                 <div className="bg-slate-100 rounded-2xl p-4">
-                  <div className="text-sm text-slate-500">Date</div>
+                  <div className="text-sm text-slate-500">Booking Date</div>
                   <div className="font-semibold text-slate-800 mt-1">
                     {booking.bookingDate.toLocaleString().split('T')[0]}
                   </div>
@@ -211,8 +239,8 @@ const PassengerFlight = ({ passengerId }) => {
                       <td className="p-2">
                         <span
                           className={`px-2 py-0.5 rounded-full text-xs font-semibold ${seat.status === "CANCELLED"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-green-100 text-green-700"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-green-100 text-green-700"
                             }`}
                         >
                           {seat.status}
@@ -222,7 +250,7 @@ const PassengerFlight = ({ passengerId }) => {
                       <td className="p-2">
                         <button
                           className="bg-red-500 hover:bg-red-600 transition text-white p-2 rounded-lg"
-                          onClick={() => cancelSeat(seat.id)}
+                          onClick={() => cancelSeat(seat.id, booking.bookingId)}
                         >
                           <svg
                             width="16"

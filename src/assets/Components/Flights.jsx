@@ -3,7 +3,7 @@ import axios from 'axios';
 import { usercontext } from '../Context/usercontext';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setFlightInfo } from '../Slices/flightSlice';
+import { setFlightInfo , getFlight } from '../Slices/flightSlice.js';
 
 const StreamingFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -73,23 +73,14 @@ const StreamingFlights = () => {
                       Flight No: #{flight.id}
                     </p>
                   </div>
-
-                  {/* */}
-
                     <div className="w-full ml-8 lg:w-auto flex flex-col items-stretch gap-3">
-
                     <button
                       className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-semibold"
                       onClick={async () => {
-
                         if (Object.keys(passenger).length === 0) {
-
                           alert('Please sign in as passenger to book a flight.');
-
                         } else {
-
-                          await dispatch(setFlightInfo(flight));
-
+                          await dispatch(getFlight(flight.id));
                           navigate('/flightDetail');
                         }
                       }}
@@ -101,10 +92,8 @@ const StreamingFlights = () => {
 
                 </div>
 
-                {/* Route */}
                 <div className="mt-6 flex items-center gap-4 flex-wrap">
 
-                  {/* Origin */}
                   <div>
                     <div className="text-sm text-slate-500">From</div>
 
@@ -117,7 +106,6 @@ const StreamingFlights = () => {
                     </div>
                   </div>
 
-                  {/* Flight Path */}
                   <div className="flex-1 min-w-[120px]">
                     <div className="relative h-[2px] bg-slate-300">
 
@@ -132,7 +120,6 @@ const StreamingFlights = () => {
                     </div>
                   </div>
 
-                  {/* Destination */}
                   <div className="text-right">
                     <div className="text-sm text-slate-500">To</div>
 
@@ -147,32 +134,10 @@ const StreamingFlights = () => {
 
                   <div className="bg-green-100 text-green-700 px-4 py-1 ml-8 rounded-2xl">
                     <div className="text-sm">price</div>
-                    <div className="text-lg font-bold">₹{flight.price.toLocaleString()}</div>
+                    <div className="text-lg font-bold">₹{flight.basePrice.toLocaleString()}</div>
                     
                   </div> 
-                  {/* <div className="w-full ml-8 lg:w-auto flex flex-col items-stretch gap-3">
-
-                    <button
-                      className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-semibold"
-                      onClick={async () => {
-
-                        if (Object.keys(passenger).length === 0) {
-
-                          alert('Please sign in as passenger to book a flight.');
-
-                        } else {
-
-                          await dispatch(setFlightInfo(flight));
-
-                          navigate('/flightDetail');
-                        }
-                      }}
-                    >
-                      Book Now
-                    </button>
-
-                  </div> */}
-
+                 
                 </div>
               </div>
 
