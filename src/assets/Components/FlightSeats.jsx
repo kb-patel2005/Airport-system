@@ -52,7 +52,6 @@ export default function FlightSeats() {
 
     useEffect(() => {
         if (!scheduleId) return;
-        alert(scheduleId)
         getSeats();
 
         const client = new Client({

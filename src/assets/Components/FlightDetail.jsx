@@ -104,7 +104,6 @@ export default function FlightDetail() {
                             <button
                                 className="py-2 text-white rounded-2xl mt-1.5 px-5 bg-blue-600"
                                 onClick={(e) => {
-                                    alert(schedule.id)
                                     dispatch(setSchduleId(schedule.id));
                                     navigate('/FlightSeats');
                                 }}
