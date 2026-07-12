@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './assets/Components/Navbar'
 import { Outlet } from 'react-router-dom'
+import { Helmet } from "react-helmet";
 import { usercontext } from './assets/Context/usercontext'
 import { staffcontext } from './assets/Context/staffcontext'
 

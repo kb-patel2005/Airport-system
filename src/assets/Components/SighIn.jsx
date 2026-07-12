@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { findData, setRole } from '../Slices/staffSlice';
+import { Helmet } from "react-helmet";
 import { usercontext } from '../Context/usercontext';
 import { staffcontext } from '../Context/staffcontext';
 import { Suspense } from 'react';
@@ -52,14 +53,14 @@ export default function SighIn() {
         />
 
         <meta property="og:title" content="Sign In | Airport System" />
-        <meta property="og:description" content="Sign in to your Airport System account to manage flights, view booking details, and access real-time seat availability and tracking." />
+        <meta property="og:description" content="Sign in to your flight System account to manage flight booking, view booking details, and access real-time seat map and flight status tracking." />
         <meta property="og:image" content="https://airportsystem.netlify.app/flight_system.png" />
         <meta property="og:url" content="https://airportsystem.netlify.app/" />
         <meta property="og:type" content="website" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sign In | Airport System" />
-        <meta name="twitter:description" content="Sign in to your Airport System account to manage flights, view booking details, and access real-time seat availability and tracking." />
+        <meta name="twitter:description" content="Sign in to your flight System account to manage flight booking, view booking details, and access real-time seat map and flight status tracking." />
         <meta name="twitter:image" content="https://airportsystem.netlify.app/flight_system.png" />
 
         <link rel="canonical" href="https://airportsystem.netlify.app/" />
