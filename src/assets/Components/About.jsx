@@ -62,7 +62,7 @@ const About = () => {
             Your trusted travel companion — making every journey smooth,
             personalized, and stress-free.
           </p>
-          <p className="text-3xl sm:text-5xl font-extrabold text-blue-900">it is not real website, it is a demo </p>
+          <p className="text-3xl sm:text-5xl font-extrabold text-red-700">it is not real website, it is a demo </p>
           <div className="mt-10">
             <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
               Get Started
