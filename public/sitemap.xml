@@ -28,26 +28,4 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- Private Pages -->
-  <url>
-    <loc>https://airportsystem.netlify.app/AddFlight</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://airportsystem.netlify.app/passengerFlight</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://airportsystem.netlify.app/FlightSeats</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://airportsystem.netlify.app/flightDetail</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
 </urlset>
