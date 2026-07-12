@@ -148,7 +148,7 @@ export default function FlightSearch() {
 
       <h1 className="font-bold text-2xl text-indigo-700">Search flight</h1>
       
-      <p className="text-3xl sm:text-5xl font-extrabold text-red-700">it give demo results not real ones </p>
+      <p className="text-xl font-extrabold text-red-700">it give demo results not real ones </p>
       <div className="text-[12px] text-gray-700">enter your origin and destination</div>
 
       <div className="flex gap-3 flex-wrap">

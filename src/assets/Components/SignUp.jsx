@@ -137,7 +137,7 @@ export default function SignUp() {
 
                   <h1 className='text-xl sm:text-2xl font-extrabold mb-2 text-indigo-700'>Create your account</h1>
                   <h3 className='text-[13px] text-black'>sign up to book flight and explore world</h3>
-                  <p className="text-3xl sm:text-5xl font-extrabold text-red-700">it is not real website, it is a demo </p>
+                  <p className="text-xl font-extrabold text-red-700">it is not real website, it is a demo </p>
                 </div>
 
                 <div className='w-[100%] max-w-[500px]'>

@@ -100,7 +100,7 @@ const StreamingFlights = () => {
       </Helmet>
 
       <div className="text-3xl text-center font-extrabold">Available Flights</div>
-      <p className="text-3xl sm:text-5xl font-extrabold text-red-700">it is not real website, it is a demo </p>
+      <p className="text-xl font-extrabold text-red-700">it is not real website, it is a demo </p>
       <br />
       <div className="flex gap-4 flex-wrap">
         {flights.map(flight => (

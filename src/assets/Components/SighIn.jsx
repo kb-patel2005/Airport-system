@@ -142,7 +142,7 @@ export default function SighIn() {
               <div className='flex items-center flex-col gap-1.5'>
                 <h1 className="text-xl sm:text-2xl font-bold text-indigo-700 text-center">login with registed account</h1>
                 <p className='text-[12px]'>login and fast choice your favourite seat</p>
-                <p className="text-3xl sm:text-5xl font-extrabold text-red-700">it is not real website, it is a demo </p>
+                <p className="text-xl font-extrabold text-red-700">it is not real website, it is a demo </p>
               </div>
 
               <div className='w-[100%] max-w-[500px]'>
