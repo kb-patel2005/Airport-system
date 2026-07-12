@@ -63,6 +63,8 @@ export default function Home() {
         <div className="w-[100%] mx-auto flex flex-col items-center justify-center py-24" style={{ background: 'linear-gradient(#00000000, rgb(153, 203, 230))' }}>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold text-blue-900">flight booking and flight ticket deals online with us </h1>
+          <p className="text-3xl sm:text-5xl font-extrabold text-blue-900">it is not real website, it is a demo </p>
+
           <p className="mt-3 text-sm">Experience seamless flight booking, personalized flight seat map, flight deals and 24 × 7 support — all in one place.</p>
           <div className="mt-10 flex gap-6">
             <Link
