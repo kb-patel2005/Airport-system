@@ -44,10 +44,16 @@ function ComboBoxSearch({ data, from, onSelect }) {
       onClose={() => setQuery('')}
     >
       <div className="border rounded">
-        <div className="font-bold p-1 text-sm text-gray-400">{from ? 'From' : 'To'}</div>
+        <label
+          className="font-semibold p-1 text-sm text-gray-700"
+          htmlFor={from ? "from-flight" : "to-flight"}
+        >
+          {from ? "From" : "To"}
+        </label>
         <ComboboxInput
           className="p-1.5 rounded focus:outline-none focus:ring-0 focus:border-transparent"
-          aria-label="Flight"
+          id={from ? "from-flight" : "to-flight"}
+          aria-label={from ? "From airport" : "To airport"}
           displayValue={(flight) =>
             flight
               ? from
@@ -59,14 +65,14 @@ function ComboBoxSearch({ data, from, onSelect }) {
           onChange={(event) => setQuery(event.target.value)}
         />
       </div>
-      <ComboboxOptions anchor="bottom" className="border rounded-lg empty:invisible bg-gray-300">
+      <ComboboxOptions anchor="bottom" className="border rounded-lg empty:invisible bg-white shadow-lg">
         {filteredFlights.map((flight) => (
-          <ComboboxOption key={flight.id} value={flight} className="p-1 data-focus:bg-blue-100">
+          <ComboboxOption key={flight.id} value={flight} className="p-2 data-focus:bg-indigo-100 data-focus:text-gray-900 cursor-pointer">
             <div>
               <div className="text-md">
                 {from ? flight.origincity : flight.destinationcity}
               </div>
-              <div className="text-[12px] text-gray-400">
+              <div className="text-sm text-gray-700">
                 {from
                   ? `${flight.originstate}, ${flight.origincountry}`
                   : `${flight.destinationstate}, ${flight.destinationcountry}`}
@@ -134,15 +140,15 @@ export default function FlightSearch() {
 
   const fetchFlight = async (id) => {
 
-  } 
+  }
 
   return (
     <div className="flex flex-col mx-auto gap-5 p-6 shadow-2xl rounded-2xl w-fit bg-blue-100">
-      
-      <div>
-        <div className="font-bold text-2xl text-indigo-700">Search flight</div>
-        <div className="text-[12px] text-gray-400">enter your origin and destination</div>
-      </div>
+
+
+      <h1 className="font-bold text-2xl text-indigo-700">Search flight</h1>
+      <div className="text-[12px] text-gray-700">enter your origin and destination</div>
+
       <div className="flex gap-3 flex-wrap">
         <ComboBoxSearch data={flights} from={true} onSelect={setFrom} />
         <ComboBoxSearch data={flights} from={false} onSelect={setTo} />
@@ -154,7 +160,6 @@ export default function FlightSearch() {
         </button>
       </div>
 
-      {/* Results section */}
       <div className="mt-6">
         {searchResults.length > 0 ? (<>
           <p className='text-xl font-bold mb-5'>Results</p>
@@ -163,18 +168,25 @@ export default function FlightSearch() {
               <div className='flex gap-5'>
                 <div>
                   <div className='text-lg font-bold text-indigo-700'>{flight.origincity}</div>
-                  <div className='text-[12px] text-gray-500'>{flight.originstate}, {flight.origincountry}</div>
+                  <div className="text-sm text-gray-700">
+                    {flight.originstate}, {flight.origincountry}
+                  </div>
                 </div>
                 <div className='text-2xl font-bold text-indigo-700'>
                   →
                 </div>
                 <div>
                   <div className='text-lg font-bold text-indigo-700'>{flight.destinationcity}</div>
-                  <div className='text-[12px] text-gray-500'>{flight.destinationstate}, {flight.destinationcountry}</div>
+                  <div className='text-sm text-gray-700'>{flight.destinationstate}, {flight.destinationcountry}</div>
                 </div>
               </div>
-              <div className='font-bold mt-3 text-indigo-500'>price: {flight.price}</div>
-              <div className='font-bold mt-3 text-indigo-500'>Airline: {flight.airline}</div>
+              <div className="font-semibold mt-3 text-indigo-700">
+                Price: ₹{flight.price}
+              </div>
+
+              <div className="font-semibold mt-2 text-indigo-700">
+                Airline: {flight.airline}
+              </div>
               <button
                 className='bg-indigo-700 text-white w-[100%] p-1.5 rounded mt-3'
                 onClick={async () => {
@@ -185,7 +197,7 @@ export default function FlightSearch() {
             </div>
           ))}
         </>) : (
-          <div className="text-gray-500">No flights found</div>
+          <div className="text-gray-700 font-medium">No flights found</div>
         )}
       </div>
     </div>

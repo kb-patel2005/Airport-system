@@ -1,4 +1,4 @@
-import React, { useContext, useState , useEffect} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { findData, setRole } from '../Slices/staffSlice';
@@ -40,6 +40,30 @@ export default function SighIn() {
 
   return (
     <div className="w-full min-h-[70vh] flex flex-col justify-center items-center">
+      <Helmet>
+        <title>flight booking and flight ticket deals online with us </title>
+        <meta
+          name="description"
+          content="Sign in to your flight System account to manage flight booking, view booking details, and access real-time seat map and flight status tracking."
+        />
+        <meta
+          name="keywords"
+          content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, flight system, live flight tracking"
+        />
+
+        <meta property="og:title" content="Sign In | Airport System" />
+        <meta property="og:description" content="Sign in to your Airport System account to manage flights, view booking details, and access real-time seat availability and tracking." />
+        <meta property="og:image" content="https://airportsystem.netlify.app/flight_system.png" />
+        <meta property="og:url" content="https://airportsystem.netlify.app/" />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sign In | Airport System" />
+        <meta name="twitter:description" content="Sign in to your Airport System account to manage flights, view booking details, and access real-time seat availability and tracking." />
+        <meta name="twitter:image" content="https://airportsystem.netlify.app/flight_system.png" />
+
+        <link rel="canonical" href="https://airportsystem.netlify.app/" />
+      </Helmet>
       <Suspense fallback={<div>Loading...</div>}>
         <div className="text-6xl w-[100%] mx-auto max-w-[750px] text-end animate">✈️</div>
         <div className="relative w-full max-w-[750px] h-[80vh] border-black rounded-lg shadow-lg shadow-gray-400 overflow-hidden flex justify-center items-center">
@@ -94,8 +118,8 @@ export default function SighIn() {
               </div>
 
               <div className='w-[100%] max-w-[500px]'>
-                <div className='text-sm font-bold'>role</div>
-                <select name="role" onChange={handleRole} className='border-2 text-sm border-black rounded-md p-2.5 max-w-[500px] w-[100%]' required>
+                <label htmlFor='role' className='text-sm font-bold'>role</label>
+                <select id='role' name="role" onChange={handleRole} className='border-2 text-sm border-black rounded-md p-2.5 max-w-[500px] w-[100%]' required>
                   <option value="passenger">Passenger</option>
                   <option value="admin">Admin</option>
                   <option value="staff">Staff</option>
@@ -103,8 +127,9 @@ export default function SighIn() {
               </div>
 
               <div className='w-[100%] max-w-[500px]'>
-                <div className='text-sm font-bold'>Email</div>
+                <label htmlFor='email' className='text-sm font-bold'>Email</label>
                 <input type="text"
+                  id='email'
                   name='username'
                   value={data.username}
                   placeholder='Email'
@@ -114,8 +139,9 @@ export default function SighIn() {
               </div>
 
               <div className='w-[100%] max-w-[500px]'>
-                <div className='text-sm font-bold'>password</div>
+                <label htmlFor="password" className='text-sm font-bold'>password</label>
                 <input type="password"
+                  id="password"
                   name='password'
                   value={data.password}
                   placeholder='Password'
@@ -133,7 +159,7 @@ export default function SighIn() {
               <p className="text-center text-sm font-bold">
                 Don't have an account?
                 <span className="text-indigo-700 underline cursor-pointer text-sm">
-                  <Link to="/signup">  Sign Up</Link>
+                  <Link to="/signup"> Sign Up</Link>
                 </span>
               </p>
             </div>

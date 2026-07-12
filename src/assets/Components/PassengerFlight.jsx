@@ -31,7 +31,6 @@ const PassengerFlight = ({ passengerId }) => {
         }
       );
 
-      // Update local state: mark seat as cancelled inside the booking
       setBookings((prev) =>
         prev.map((booking) =>
           booking.bookingId === bookingId

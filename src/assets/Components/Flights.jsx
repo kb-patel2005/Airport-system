@@ -4,6 +4,7 @@ import { usercontext } from '../Context/usercontext';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setFlightInfo, getFlight } from '../Slices/flightSlice.js';
+import { Helmet } from 'react-helmet';
 
 const StreamingFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -48,16 +49,18 @@ const StreamingFlights = () => {
   }, [flag, totalPages, page]);
 
   return (
-    <>
-      <title>All Flights Dashboard | Airport System</title>
-      <meta
-        name="description"
-        content="View all flights in one place. Track schedules, seat availability, bookings, cancellations, and live updates with Airport System's dashboard."
-      />
+    <section className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-6">
+      <Helmet>
+        <title>All Flights Dashboard | Airport System</title>
+        <meta
+          name="description"
+          content="View all flights in one place. Track schedules, seat availability, bookings, cancellations, and live updates with Airport System's dashboard."
+        />
+      </Helmet>
 
       {/* Open Graph */}
       <meta property="og:title" content="All Flights Dashboard | Airport System" />
-      <meta property="og:description" content="Centralized flight dashboard with live seat updates, booking management, and real-time tracking." />
+      <meta property="og:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
       <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
       <meta property="og:url" content="https://airportsystem.netlify.app/dashboard" />
       <meta property="og:type" content="website" />
@@ -65,7 +68,7 @@ const StreamingFlights = () => {
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="All Flights Dashboard | Airport System" />
-      <meta name="twitter:description" content="Manage flights, bookings, cancellations, and live seat updates in one dashboard." />
+      <meta name="twitter:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
       <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
 
       {/* Canonical */}
@@ -169,7 +172,7 @@ const StreamingFlights = () => {
           </div>
         ))}
       </div>
-    </>
+    </section>
   );
 };
 

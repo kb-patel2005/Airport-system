@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { VscMenu } from 'react-icons/vsc';
 import { GoX } from 'react-icons/go';
@@ -29,14 +29,17 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    
-    <div className='flex justify-between items-center p-5 w-full relative'
-      style={{ background: 'linear-gradient(180deg, #99cbe6, transparent)' }}>
+
+    <nav
+      className="flex justify-between items-center p-5 w-full relative"
+      aria-label="Main navigation">
       {/* Logo */}
       <div>
         <h1 className='flex items-center gap-2'>
           <Link to='/' className='flex items-center'>
-            <svg width="130" height="80" viewBox="0 0 274 187" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              aria-hidden="true"
+              focusable="false" width="130" height="80" viewBox="0 0 274 187" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M28.5862 128.396L204.25 22.1643C224.492 9.9234 250.157 16.7941 261.576 37.5105C267.71 48.6384 263.082 63.0111 251.632 68.3963L48.2392 164.052L60.734 186.72L28.5862 128.396Z" fill="#6B5DFF" />
               <path d="M222.801 74.4487L185.182 142.698C174.289 162.461 149.804 169.016 130.494 157.338V157.338L187.837 53.3043L222.801 74.4487Z" fill="#6B5DFF" />
               <path d="M96.4359 68.817C98.9192 51.3876 115.033 39.4626 132.427 42.1817L171.234 48.248L166.737 79.8067L96.4359 68.817V68.817Z" fill="#6B5DFF" />
@@ -48,14 +51,18 @@ export default function Navbar() {
         </h1>
       </div>
 
-      {/* Menu Icon */}
-      <div className='sm:hidden font-extrabold'>
-        
-        <VscMenu
-          className='cursor-pointer '
-          style={{ fontSize: '25px', color: 'black' , fontWeight: 'bold'}}
+      <div className="sm:hidden">
+        <button
+          type="button"
           onClick={() => setMenuOpen(true)}
-        />
+          aria-label="Open navigation menu"
+          className="cursor-pointer"
+        >
+          <VscMenu
+            className="text-2xl text-black font-bold"
+            aria-hidden="true"
+          />
+        </button>
       </div>
 
       {/* Navigation Menu */}
@@ -65,51 +72,85 @@ export default function Navbar() {
       >
         <ul className='p-5 sm:p-0 flex flex-col sm:flex-row gap-4 z-50'>
           {/* Close Icon */}
-          <span className='cursor-pointer sm:hidden'>
-            <GoX style={{ fontSize: '25px', color: 'black' , fontWeight: 'bold'}}
-              onClick={() => setMenuOpen(false)}/>
-          </span>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close navigation menu"
+            className="sm:hidden cursor-pointer rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <GoX
+              className="text-2xl text-black"
+              aria-hidden="true"
+            />
+          </button>
 
           {/* Links */}
 
           <div className='sm:hidden w-[100%] items-center flex justify-center'>
-            <div className='flex sm:hidden w-[50%] h-[100%] min-h-[100px] rounded-[50%] border border-black ml-4 cursor-pointer overflow-hidden justify-center items-center'
-              onClick={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}>
-              {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>}
-            </div>
+            <button
+              type="button"
+              aria-label="Open profile menu"
+              className="flex sm:hidden w-[50%] h-[100%] min-h-[100px] rounded-full border border-black ml-4 overflow-hidden justify-center items-center"
+              onClick={() => {
+                Object.keys(data).length === 0
+                  ? setShow(false)
+                  : setShow(!show);
+              }}
+            >
+              {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`} alt="User profile" />}
+            </button>
           </div>
 
-          <li className='py-3 sm:p-2'><Link to="/" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/about" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>About</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/flights" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Flight</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>booking</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/signin" className='py-5 sm:p-2 text-blue-700 font-bold' onClick={() => setMenuOpen(false)}>Sign In</Link></li>
-          <div className='hidden sm:flex w-[40px] h-[40px] rounded-[50%] border border-black ml-4 cursor-pointer overflow-hidden justify-center items-center'
-            onMouseEnter={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}
-            onMouseLeave={() => {Object.keys(data).length === 0 ? setShow(false) : setShow(!show);}}>
-            {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`}></img>}
-          </div>
+          <li className='py-3 sm:p-2'><Link to="/" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/about" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => setMenuOpen(false)}>About</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/flights" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => setMenuOpen(false)}>Flight</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => setMenuOpen(false)}>booking</Link></li>
+          <li className='py-3 sm:p-2'><Link to="/signin" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => setMenuOpen(false)}>Sign In</Link></li>
+          <button
+            type="button"
+            aria-label="User profile"
+            className="hidden sm:flex w-[40px] h-[40px] rounded-full border border-black ml-4 overflow-hidden justify-center items-center"
+            onMouseEnter={() => { Object.keys(data).length === 0 ? setShow(false) : setShow(!show); }}
+            onMouseLeave={() => { Object.keys(data).length === 0 ? setShow(false) : setShow(!show); }}>
+            {Object.keys(data).length === 0 ? <AiOutlineUser className='h-[100%] w-[100%] object-cover' /> : <img src={`data:image/jpeg;base64,${data.image}`} alt='userProfile pic'></img>}
+          </button>
 
           {show ? (
-              <div style={{ width: "max-content" }}
-                className="px-10 py-5 object-cover rounded-[33px] shadow-[7px_7px_4px_0px_rgba(0,0,0,0.25)] outline-offset-[-1px] outline-zinc-400 inline-flex justify-center items-center gap-2.5 position absolute top-20 right-10 z-50 bg-white">
-                <div className=" inline-flex flex-col justify-start items-center gap-3">
-                  <div className='self-end text-2xl cursor-pointer' onClick={() => setShow(false)}><GoX /></div>
-                  <div className="inline-flex justify-start items-center gap-2.5">
-                    <div className="flex justify-start items-center gap-2.5">
-                      <img className="w-20 h-20 rounded-[50%] border border-black" src={data.image === null ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBZKfdACXnytnsP84UBvpKKamPtmITFajBlpq3F3m8eOr63XToI0mmPnc&shttps://placehold.co/175x175" : `data:image/jpeg;base64,${data.image}`} />
-                    </div>
-                  </div>
-                  <div className="self-stretch flex flex-col justify-start items-start gap-4">
-                    <div className="self-stretch justify-start text-black text-[16px] font-medium ">Name : {data.username}</div>
-                    <div className="self-stretch justify-start text-black text-[16px] font-medium ">Phone: {data.phone}</div>
-                    <div className="self-stretch justify-start text-black text-[16px] font-medium">Email: {data.email}</div>
-                    <div className="self-stretch justify-start text-black  font-medium ">Gender: {data.gender}</div>
+            <div style={{ width: "max-content" }}
+              className="px-10 py-5 object-cover rounded-[33px] shadow-[7px_7px_4px_0px_rgba(0,0,0,0.25)] outline-offset-[-1px] outline-zinc-400 inline-flex justify-center items-center gap-2.5 position absolute top-20 right-10 z-50 bg-white">
+              <div className=" inline-flex flex-col justify-start items-center gap-3">
+                <button
+                  type="button"
+                  aria-label="Close profile"
+                  className="self-end text-2xl"
+                  onClick={() => setShow(false)}
+                >
+                  <GoX aria-hidden="true" />
+                </button>
+                <div className="inline-flex justify-start items-center gap-2.5">
+                  <div className="flex justify-start items-center gap-2.5">
+                    <img
+                      className="w-20 h-20 rounded-full border border-black"
+                      src={data.image ? `data:image/jpeg;base64,${data.image}` : "/flight_system.png"}
+                      alt="User profile"
+                    />
                   </div>
                 </div>
-              </div>) : ""}
+                <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                  <div className="self-stretch justify-start text-black text-[16px] font-medium ">Name : {data.username}</div>
+                  <div className="self-stretch justify-start text-black text-[16px] font-medium ">Phone: {data.phone}</div>
+                  <div className="self-stretch justify-start text-black text-[16px] font-medium">Email: {data.email}</div>
+                  <div className="self-stretch justify-start text-black  font-medium ">Gender: {data.gender}</div>
+                </div>
+              </div>
+            </div>) : ""}
         </ul>
-      </div>
-    </div>
+      </div >
+    </nav >
   );
 }

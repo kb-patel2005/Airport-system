@@ -23,7 +23,7 @@ export default function FlightDetail() {
 
 
     return (
-        <div className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-6">
+        <section className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-6">
             <title>flight Information</title>
             <div className="w-full max-w-4xl bg-white rounded-3xl shadow-md overflow-hidden">
 
@@ -150,6 +150,6 @@ export default function FlightDetail() {
 
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

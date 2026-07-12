@@ -5,8 +5,6 @@ import { Outlet } from 'react-router-dom'
 import { usercontext } from './assets/Context/usercontext'
 import { staffcontext } from './assets/Context/staffcontext'
 
-
-
 function App() {
   useEffect(() => {
     console.log("Initial UI visible at:", performance.now());
@@ -18,11 +16,12 @@ function App() {
 
   return (
     <>
-    
       <staffcontext.Provider value={{ staff, setstaff }}>
         <usercontext.Provider value={{ passenger, setPassenger }}>
           <Navbar />
-          <Outlet />
+          <main>
+            <Outlet />
+          </main>
         </usercontext.Provider>
       </staffcontext.Provider>
     </>

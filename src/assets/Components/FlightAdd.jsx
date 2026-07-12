@@ -229,9 +229,10 @@ export default function FlightAdd() {
                         <div className="flex flex-col justify-center items-center h-full gap-5">
                             <h1 className="text-3xl font-bold text-indigo-600">Add Flight</h1>
                             <br />
-
+                            <label htmlFor='airline' className="text-xl text-left text-blue-700">Set Origin:</label>
                             <input
                                 type="text"
+                                id='airline'
                                 placeholder="Airline"
                                 name="airline"
                                 value={data.airline}
@@ -242,9 +243,10 @@ export default function FlightAdd() {
 
                             {/* Origin Section */}
                             <div className="w-full max-w-[500px]">
-                                <p className="text-xl text-left text-blue-700">Set Origin:</p>
+                                <label htmlFor='ocountry' className="text-xl text-left text-blue-700">Set Origin:</label>
                                 <div className="flex flex-col sm:flex-row gap-2 mt-2">
                                     <select
+                                        id='ocountry'
                                         name="origincountry"
                                         className="border-2 border-blue-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                                         onChange={handleCountryChange}
@@ -331,8 +333,10 @@ export default function FlightAdd() {
                             </div>
 
                             {/* Price */}
+                            <label htmlFor='price' className="text-xl text-left text-blue-700">Set Origin:</label>
                             <input
                                 type="number"
+                                id='price'
                                 name="basePrice"
                                 value={data.basePrice}
                                 onChange={handleClick}
