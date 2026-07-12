@@ -51,28 +51,54 @@ const StreamingFlights = () => {
   return (
     <section className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-6">
       <Helmet>
+        {/* Meta tags */}
         <title>All Flights Dashboard | Airport System</title>
         <meta
           name="description"
-          content="View all flights in one place. Track schedules, seat availability, bookings, cancellations, and live updates with Airport System's dashboard."
+          content="View all flights in one place. Track schedules, seat status, bookings, cancellations, and live updates with Airport System's dashboard."
         />
+        <meta
+          name="keywords"
+          content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
+        />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="All Flights Dashboard | Airport System" />
+        <meta property="og:description" content="View all flights in one place. Track schedules, seat status and type of seat, bookings, cancellations, and live updates with Airport System's dashboard." />
+        <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
+        <meta property="og:url" content="https://airportsystem.netlify.app/dashboard" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="All Flights Dashboard | Airport System" />
+        <meta name="twitter:description" content="Manage flights, bookings, cancellations, and live seat updates in one dashboard." />
+        <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
+
+        {/* Canonical */}
+        <link rel="canonical" href="https://airportsystem.netlify.app/dashboard" />
+
+        {/* JSON-LD structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://airportsystem.netlify.app/dashboard",
+            "name": "All Flights Dashboard | Airport System",
+            "description":
+              "View all flights in one place. Track schedules, seat status and type of seat, bookings, cancellations, and live updates with Airport System's dashboard.",
+            "publisher": {
+              "@type": "Person",
+              "name": "kb patel",
+              "image": {
+                "@type": "ImageObject",
+                "url": "https://airportsystem.netlify.app/preview.png"
+              }
+            }
+          })}
+        </script>
       </Helmet>
 
-      {/* Open Graph */}
-      <meta property="og:title" content="All Flights Dashboard | Airport System" />
-      <meta property="og:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
-      <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
-      <meta property="og:url" content="https://airportsystem.netlify.app/dashboard" />
-      <meta property="og:type" content="website" />
-
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="All Flights Dashboard | Airport System" />
-      <meta name="twitter:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
-      <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
-
-      {/* Canonical */}
-      <link rel="canonical" href="https://airportsystem.netlify.app/dashboard" />
       <div className="text-3xl text-center font-extrabold">Available Flights</div>
       <br />
       <div className="flex gap-4 flex-wrap">

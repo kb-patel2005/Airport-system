@@ -6,29 +6,52 @@ const About = () => {
 
     <section>
       <Helmet>
+        {/* Meta tags */}
         <title>About Us | Airport System</title>
         <meta
           name="description"
-          content="About flight System — a modern flight ticket booking, flight deals  with live flight tracking also flight seat map status updates, cancellations, and real-time flight tracking."
+          content="Learn more about Airport System — modern flight booking, live tracking, seat map updates, cancellations, and real-time flight status."
         />
         <meta
           name="keywords"
           content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
         />
 
+        {/* Open Graph */}
         <meta property="og:title" content="About Us | Airport System" />
-        <meta property="og:description" content="About flight System — a modern flight ticket booking, flight deals  with live flight tracking also flight seat map status updates, cancellations, and real-time flight tracking." />
+        <meta property="og:description" content="Learn more about Airport System — modern flight booking, live tracking, seat map updates, cancellations, and real-time flight status." />
         <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
         <meta property="og:url" content="https://airportsystem.netlify.app/about" />
         <meta property="og:type" content="website" />
 
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Us | Airport System" />
         <meta name="twitter:description" content="Airport System offers real-time flight booking, seat management, and live tracking updates." />
         <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
 
+        {/* Canonical */}
         <link rel="canonical" href="https://airportsystem.netlify.app/about" />
+
+        {/* JSON-LD structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://airportsystem.netlify.app/about",
+            "name": "About Us | Airport System",
+            "publisher": {
+              "@type": "Person", // use Person for personal site
+              "name": "kb patel",
+              "image": {
+                "@type": "ImageObject",
+                "url": "https://airportsystem.netlify.app/preview.png"
+              }
+            }
+          })}
+        </script>
       </Helmet>
+
 
       <div className="min-h-screen text-gray-800 flex flex-col items-center">
         <div className="flex flex-col items-center justify-center py-20 text-center w-full max-w-[1080px]">

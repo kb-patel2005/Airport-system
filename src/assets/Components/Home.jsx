@@ -11,29 +11,53 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>flight booking and flight ticket deals online with us </title>
+        {/* Meta tags */}
+        <title>Flight booking and flight ticket deals online with us</title>
         <meta
           name="description"
-          content="flight airlines with that flight booking information, flight schedule, flight price, flight seat map,live flight status (flight tracker) and flight status information, flight deals update"
+          content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
         />
         <meta
           name="keywords"
           content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
         />
 
-        <meta property="og:title" content="flight booking and flight ticket deals online with us " />
-        <meta property="og:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
+        {/* Open Graph */}
+        <meta property="og:title" content="Flight booking and flight ticket deals online with us" />
+        <meta property="og:description" content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals." />
         <meta property="og:image" content="https://airportsystem.netlify.app/flight_system.png" />
         <meta property="og:url" content="https://airportsystem.netlify.app/" />
         <meta property="og:type" content="website" />
 
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Book Flights Online | Live Seat Updates & Tracking" />
-        <meta name="twitter:description" content="flight airlines with that flight booking information, flight schedule, flight price, flight seat, flight status map and flight status information, flight deals update" />
+        <meta name="twitter:description" content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals." />
         <meta name="twitter:image" content="https://airportsystem.netlify.app/flight_system.png" />
 
+        {/* Canonical */}
         <link rel="canonical" href="https://airportsystem.netlify.app/" />
+
+        {/* JSON-LD structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://airportsystem.netlify.app/",
+            "name": "Airport System",
+            "publisher": {
+              "@type": "Person",
+              "name": "kb patel",
+              "image": {
+                "@type": "ImageObject",
+                "url": "https://airportsystem.netlify.app/flight_system.png"
+              }
+            }
+          })}
+        </script>
       </Helmet>
+
+
       <div className="relative min-h-screen text-gray-800 flex flex-col items-center w-[100%]"  >
 
         <div className="w-[100%] mx-auto flex flex-col items-center justify-center py-24" style={{ background: 'linear-gradient(#00000000, rgb(153, 203, 230))' }}>
