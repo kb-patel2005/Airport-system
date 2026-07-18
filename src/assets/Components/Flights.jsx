@@ -49,7 +49,7 @@ const StreamingFlights = () => {
   }, [flag, totalPages, page]);
 
   return (
-    <section className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-6">
+    <section className="min-h-screen bg-[#f5f7fb] flex flex-col items-center justify-center p-6">
       <Helmet>
         {/* Meta tags */}
         <title>All Flights Dashboard | Airport System</title>
