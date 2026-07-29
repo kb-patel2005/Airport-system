@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>flight System management website</title>
+        <title>flight System management Syconnect</title>
         <meta
           name="description"
           content="Airport System — book flights, manage tickets, and track flights in real time.with give seat map and flight status tracking."

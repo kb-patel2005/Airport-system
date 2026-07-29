@@ -366,7 +366,7 @@ export default function FlightSeats() {
                                                                 <p className="text-gray-700 text-sm mt-3">
                                                                     <span className="font-bold mr-1 text-sky-600">Seats:</span>
                                                                     <span className="text-green-600 font-semibold">
-                                                                        {mySeats.map(s => s.seatNumber).join(', ')}
+                                                                        {mySeats.map(s=> s).join(', ')}
                                                                     </span>
                                                                 </p>
                                                                 <p className="text-gray-700 text-sm mt-3">
