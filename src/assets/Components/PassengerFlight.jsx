@@ -68,7 +68,8 @@ const PassengerFlight = ({ passengerId }) => {
 
   return (
     <div>
-      <div className="text-xl font-bold text-center mb-5 text-indigo-700">My Bookings</div>
+      <div className="text-3xl font-bold text-center mb-5 text-indigo-700">My Bookings</div>
+      <div className="text-sm text-center mb-5 text-indigo-700">show your booking with details. also you can cancel your booking at any time.</div>
       {bookings.map((booking) => (
         <div
           key={booking.bookingId}

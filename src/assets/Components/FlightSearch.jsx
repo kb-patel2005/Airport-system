@@ -1,38 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from "react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from "@headlessui/react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getFlight } from "../Slices/flightSlice";
 
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getFlight, setFlightInfo } from '../Slices/flightSlice';
+const API_URL =
+  "https://airport-system-api-p7mk.onrender.com/public/allFlights";
 
-const people = [
-  { id: 1, name: 'Durward Reynolds' },
-  { id: 2, name: 'Kenton Towne' },
-  { id: 3, name: 'Therese Wunsch' },
-  { id: 4, name: 'Benedict Kessler' },
-  { id: 5, name: 'Katelyn Rohan' },
-]
 function ComboBoxSearch({ data, from, onSelect }) {
   const [selectedFlight, setSelectedFlight] = useState(null);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const filteredFlights =
-    query === ''
+    query === ""
       ? data
       : data.filter((flight) => {
-        const originMatch =
-          flight.origincity.toLowerCase().includes(query.toLowerCase()) ||
-          flight.origincountry.toLowerCase().includes(query.toLowerCase()) ||
-          flight.originstate.toLowerCase().includes(query.toLowerCase());
+          const searchQuery = query.toLowerCase();
 
-        const destinationMatch =
-          flight.destinationcity.toLowerCase().includes(query.toLowerCase()) ||
-          flight.destinationcountry.toLowerCase().includes(query.toLowerCase()) ||
-          flight.destinationstate.toLowerCase().includes(query.toLowerCase());
+          const originMatch =
+            flight.origincity?.toLowerCase().includes(searchQuery) ||
+            flight.origincountry?.toLowerCase().includes(searchQuery) ||
+            flight.originstate?.toLowerCase().includes(searchQuery);
 
-        return from ? originMatch : destinationMatch;
-      });
+          const destinationMatch =
+            flight.destinationcity
+              ?.toLowerCase()
+              .includes(searchQuery) ||
+            flight.destinationcountry
+              ?.toLowerCase()
+              .includes(searchQuery) ||
+            flight.destinationstate
+              ?.toLowerCase()
+              .includes(searchQuery);
+
+          return from ? originMatch : destinationMatch;
+        });
 
   return (
     <Combobox
@@ -41,46 +49,66 @@ function ComboBoxSearch({ data, from, onSelect }) {
         setSelectedFlight(flight);
         onSelect?.(flight);
       }}
-      onClose={() => setQuery('')}
+      onClose={() => setQuery("")}
     >
-      <div className="border rounded">
-        <label
-          className="font-semibold p-1 text-sm text-gray-700"
-          htmlFor={from ? "from-flight" : "to-flight"}
-        >
-          {from ? "From" : "To"}
-        </label>
-        <ComboboxInput
-          className="p-1.5 rounded focus:outline-none focus:ring-0 focus:border-transparent"
-          id={from ? "from-flight" : "to-flight"}
-          aria-label={from ? "From airport" : "To airport"}
-          displayValue={(flight) =>
-            flight
-              ? from
-                ? `${flight.origincity}, ${flight.originstate}, ${flight.origincountry}`
-                : `${flight.destinationcity}, ${flight.destinationstate}, ${flight.destinationcountry}`
-              : ''
-          }
-          placeholder={from ? 'From' : 'To'}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      </div>
-      <ComboboxOptions anchor="bottom" className="border rounded-lg empty:invisible bg-white shadow-lg">
-        {filteredFlights.map((flight) => (
-          <ComboboxOption key={flight.id} value={flight} className="p-2 data-focus:bg-indigo-100 data-focus:text-gray-900 cursor-pointer">
-            <div>
-              <div className="text-md">
-                {from ? flight.origincity : flight.destinationcity}
-              </div>
-              <div className="text-sm text-gray-700">
-                {from
-                  ? `${flight.originstate}, ${flight.origincountry}`
-                  : `${flight.destinationstate}, ${flight.destinationcountry}`}
-              </div>
+      <div className="relative">
+        {/* MAIN COMBOBOX */}
+        <div className="rounded-xl border border-gray-300 bg-white px-4 py-2 transition focus-within:border-indigo-600 focus-within:ring-2 focus-within:ring-indigo-100">
+          {/* TITLE */}
+          <div className="text-xs font-semibold text-gray-500">
+            {from ? "From" : "To"}
+          </div>
+
+          {/* INPUT */}
+          <ComboboxInput
+            id={from ? "from-flight" : "to-flight"}
+            aria-label={from ? "From airport" : "To airport"}
+            displayValue={(flight) =>
+              flight
+                ? from
+                  ? `${flight.origincity}, ${flight.originstate}, ${flight.origincountry}`
+                  : `${flight.destinationcity}, ${flight.destinationstate}, ${flight.destinationcountry}`
+                : ""
+            }
+            placeholder={
+              from
+                ? "Select departure city"
+                : "Select destination city"
+            }
+            onChange={(event) => setQuery(event.target.value)}
+            className="w-full border-0 bg-transparent p-0 pt-1 text-sm font-medium text-gray-900 outline-none focus:border-0 focus:outline-none focus:ring-0"
+          />
+        </div>
+
+        {/* OPTIONS */}
+        <ComboboxOptions className="absolute left-0 right-0 z-50 mt-2 max-h-72 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
+          {filteredFlights.length === 0 ? (
+            <div className="px-4 py-3 text-sm text-gray-500">
+              No location found
             </div>
-          </ComboboxOption>
-        ))}
-      </ComboboxOptions>
+          ) : (
+            filteredFlights.map((flight) => (
+              <ComboboxOption
+                key={`${flight.id}-${from ? "from" : "to"}`}
+                value={flight}
+                className="cursor-pointer rounded-lg px-4 py-3 data-[focus]:bg-indigo-50"
+              >
+                <div className="font-semibold text-gray-900">
+                  {from
+                    ? flight.origincity
+                    : flight.destinationcity}
+                </div>
+
+                <div className="mt-1 text-xs text-gray-500">
+                  {from
+                    ? `${flight.originstate}, ${flight.origincountry}`
+                    : `${flight.destinationstate}, ${flight.destinationcountry}`}
+                </div>
+              </ComboboxOption>
+            ))
+          )}
+        </ComboboxOptions>
+      </div>
     </Combobox>
   );
 }
@@ -88,120 +116,331 @@ function ComboBoxSearch({ data, from, onSelect }) {
 export default function FlightSearch() {
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
+
   const [flights, setFlights] = useState([]);
-  const [pageSize] = useState(3);
   const [searchResults, setSearchResults] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [myFlight, setMyFlight] = useState(null);
 
-  useEffect(() => {
-    let cancel = false;
-    const fetchAllPages = async () => {
-      try {
-        let currentPage = 0;
-        let totalPagesFetched = null;
-        while (!cancel && (totalPagesFetched === null || currentPage < totalPagesFetched)) {
-          const res = await axios.get(
-            `https://airport-system-api-p7mk.onrender.com/public/allFlights?page=${currentPage}&size=${pageSize}`
-          );
-          setFlights((prev) => [...prev, ...res.data.content]);
-          totalPagesFetched = res.data.totalPages;
-          currentPage++;
-        }
-      } catch (err) {
-        console.error('Error fetching flights:', err);
-      }
-    };
-    fetchAllPages();
-    return () => {
-      cancel = true;
-    };
-  }, [pageSize]);
-
-  const handleSearch = () => {
+  /*
+   * =====================================================
+   * FETCH FLIGHTS ONLY WHEN USER CLICKS SEARCH
+   * =====================================================
+   */
+  const handleSearch = async () => {
     if (!from || !to) {
       alert("Please select both origin and destination");
       return;
     }
 
-    // Find flights that match both origin and destination
-    const results = flights.filter(flight =>
-      flight.origincity === from.origincity &&
-      flight.originstate === from.originstate &&
-      flight.origincountry === from.origincountry &&
-      flight.destinationcity === to.destinationcity &&
-      flight.destinationstate === to.destinationstate &&
-      flight.destinationcountry === to.destinationcountry
-    );
+    try {
+      setLoading(true);
+      setSearched(true);
+      setSearchResults([]);
 
-    setSearchResults(results);
+      /*
+       * Fetch first page only.
+       *
+       * IMPORTANT:
+       * We are no longer fetching all pages when
+       * Home component loads.
+       */
+      const response = await axios.get(API_URL, {
+        params: {
+          page: 0,
+          size: 20,
+        },
+      });
+
+      const fetchedFlights = response.data?.content || [];
+
+      setFlights(fetchedFlights);
+
+      /*
+       * Filter flights after API response
+       */
+      const results = fetchedFlights.filter(
+        (flight) =>
+          flight.origincity === from.origincity &&
+          flight.originstate === from.originstate &&
+          flight.origincountry === from.origincountry &&
+          flight.destinationcity === to.destinationcity &&
+          flight.destinationstate === to.destinationstate &&
+          flight.destinationcountry === to.destinationcountry
+      );
+
+      setSearchResults(results);
+    } catch (error) {
+      console.error("Error fetching flights:", error);
+      setSearchResults([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const fetchFlight = async (id) => {
-
-  }
+  /*
+   * =====================================================
+   * BOOK FLIGHT
+   * =====================================================
+   */
+  const handleBookFlight = async (flightId) => {
+    try {
+      await dispatch(getFlight(flightId));
+      navigate("/flightDetail");
+    } catch (error) {
+      console.error("Error fetching flight:", error);
+    }
+  };
 
   return (
-    <div className="flex flex-col mx-auto gap-5 p-6 shadow-2xl rounded-2xl w-fit bg-blue-100">
+    <section
+      id="flight-search"
+      className="w-full bg-white px-4 py-16 sm:px-6"
+    >
+      {/* =====================================
+          1100px CONTAINER
+      ===================================== */}
 
+      <div className="mx-auto w-full max-w-[1100px]">
 
-      <h1 className="font-bold text-2xl text-indigo-700">Search flight</h1>
-      
-      <p className="text-xl font-extrabold text-red-700">it give demo results not real ones </p>
-      <div className="text-[12px] text-gray-700">enter your origin and destination</div>
+        {/* =====================================
+            HEADER
+        ===================================== */}
 
-      <div className="flex gap-3 flex-wrap">
-        <ComboBoxSearch data={flights} from={true} onSelect={setFrom} />
-        <ComboBoxSearch data={flights} from={false} onSelect={setTo} />
-        <button
-          className="px-12 py-6 rounded-lg border-2 bg-indigo-700 text-white"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-indigo-700">
+            Search Flight
+          </h1>
 
-      <div className="mt-6">
-        {searchResults.length > 0 ? (<>
-          <p className='text-xl font-bold mb-5'>Results</p>
-          {searchResults.map(flight => (
-            <div key={flight.id} className="bg-gray-100 shadow-2xl p-3 rounded-2xl mb-2">
-              <div className='flex gap-5'>
-                <div>
-                  <div className='text-lg font-bold text-indigo-700'>{flight.origincity}</div>
-                  <div className="text-sm text-gray-700">
-                    {flight.originstate}, {flight.origincountry}
-                  </div>
-                </div>
-                <div className='text-2xl font-bold text-indigo-700'>
-                  →
-                </div>
-                <div>
-                  <div className='text-lg font-bold text-indigo-700'>{flight.destinationcity}</div>
-                  <div className='text-sm text-gray-700'>{flight.destinationstate}, {flight.destinationcountry}</div>
-                </div>
-              </div>
-              <div className="font-semibold mt-3 text-indigo-700">
-                Price: ₹{flight.price}
-              </div>
+          <p className="mt-2 text-sm font-semibold text-red-600">
+            It gives demo results, not real ones.
+          </p>
 
-              <div className="font-semibold mt-2 text-indigo-700">
-                Airline: {flight.airline}
-              </div>
-              <button
-                className='bg-indigo-700 text-white w-[100%] p-1.5 rounded mt-3'
-                onClick={async () => {
-                  await dispatch(getFlight(flight.id));
-                  navigate('/flightDetail');
-                }}
-              >Book flight</button>
-            </div>
-          ))}
-        </>) : (
-          <div className="text-gray-700 font-medium">No flights found</div>
+          <p className="mt-1 text-sm text-gray-600">
+            Enter your origin and destination to find
+            available flights.
+          </p>
+        </div>
+
+        {/* =====================================
+            SEARCH BOX
+        ===================================== */}
+
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5 shadow-sm sm:p-6">
+
+          <div className="grid gap-5 md:grid-cols-[1fr_1fr_auto] md:items-end">
+
+            {/* FROM */}
+
+            <ComboBoxSearch
+              data={flights}
+              from={true}
+              onSelect={setFrom}
+            />
+
+            {/* TO */}
+
+            <ComboBoxSearch
+              data={flights}
+              from={false}
+              onSelect={setTo}
+            />
+
+            {/* SEARCH BUTTON */}
+
+            <button
+              type="button"
+              onClick={handleSearch}
+              disabled={loading}
+              className="h-[48px] rounded-xl bg-indigo-700 px-10 font-semibold text-white shadow-sm transition hover:bg-indigo-800 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
+
+          </div>
+        </div>
+
+        {/* =====================================
+            LOADING
+        ===================================== */}
+
+        {loading && (
+          <div className="mt-8 rounded-2xl border border-indigo-100 bg-indigo-50 px-6 py-8 text-center">
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-700" />
+
+            <p className="mt-3 text-sm font-medium text-indigo-700">
+              Searching available flights...
+            </p>
+          </div>
         )}
+
+        {/* =====================================
+            RESULTS
+        ===================================== */}
+
+        {!loading && searched && (
+          <div className="mt-10">
+
+            {searchResults.length > 0 ? (
+              <>
+
+                {/* RESULTS HEADER */}
+
+                <div className="mb-5 flex items-center justify-between">
+
+                  <h2 className="text-xl font-bold text-gray-900">
+                    Search Results
+                  </h2>
+
+                  <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
+                    {searchResults.length}{" "}
+                    {searchResults.length === 1
+                      ? "Flight"
+                      : "Flights"}
+                  </span>
+
+                </div>
+
+                {/* RESULTS GRID */}
+
+                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+                  {searchResults.map((flight) => (
+
+                    <div
+                      key={flight.id}
+                      className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                    >
+
+                      {/* ROUTE */}
+
+                      <div className="flex items-center justify-between gap-3">
+
+                        {/* FROM */}
+
+                        <div className="min-w-0">
+
+                          <p className="truncate text-lg font-bold text-indigo-700">
+                            {flight.origincity}
+                          </p>
+
+                          <p className="mt-1 text-xs text-gray-500">
+                            {flight.originstate},{" "}
+                            {flight.origincountry}
+                          </p>
+
+                        </div>
+
+                        {/* ARROW */}
+
+                        <div className="flex shrink-0 items-center">
+
+                          <div className="h-px w-6 bg-gray-300" />
+
+                          <span className="px-1 text-xl font-bold text-indigo-600">
+                            →
+                          </span>
+
+                          <div className="h-px w-6 bg-gray-300" />
+
+                        </div>
+
+                        {/* TO */}
+
+                        <div className="min-w-0 text-right">
+
+                          <p className="truncate text-lg font-bold text-indigo-700">
+                            {flight.destinationcity}
+                          </p>
+
+                          <p className="mt-1 text-xs text-gray-500">
+                            {flight.destinationstate},{" "}
+                            {flight.destinationcountry}
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                      {/* DIVIDER */}
+
+                      <div className="my-5 border-t border-gray-100" />
+
+                      {/* PRICE */}
+
+                      <div className="flex items-center justify-between">
+
+                        <span className="text-sm text-gray-500">
+                          Price
+                        </span>
+
+                        <span className="text-lg font-bold text-indigo-700">
+                          ₹{flight.price}
+                        </span>
+
+                      </div>
+
+                      {/* AIRLINE */}
+
+                      <div className="mt-3 flex items-center justify-between">
+
+                        <span className="text-sm text-gray-500">
+                          Airline
+                        </span>
+
+                        <span className="text-sm font-semibold text-gray-800">
+                          {flight.airline}
+                        </span>
+
+                      </div>
+
+                      {/* BOOK BUTTON */}
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleBookFlight(flight.id)
+                        }
+                        className="mt-5 w-full rounded-xl bg-indigo-700 px-4 py-3 font-semibold text-white transition hover:bg-indigo-800 active:scale-[0.98]"
+                      >
+                        Book Flight
+                      </button>
+
+                    </div>
+
+                  ))}
+
+                </div>
+              </>
+            ) : (
+              /* NO RESULTS */
+
+              <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center">
+
+                <div className="text-4xl">
+                  ✈️
+                </div>
+
+                <h3 className="mt-3 text-lg font-bold text-gray-800">
+                  No Flights Found
+                </h3>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  No flights are available for the selected
+                  route.
+                </p>
+
+              </div>
+            )}
+
+          </div>
+        )}
+
       </div>
-    </div>
+    </section>
   );
 }

@@ -59,10 +59,10 @@ export default function FlightDetail() {
                 <h1 className="text-2xl font-bold m-5 text-indigo-600">Flight Schedules</h1>
                 {
                     flightInfo.schedules?.map((schedule, index) => (
-                        <div key={index} className="p-6 border-t-2 mb-1.5 rounded-2xl">
+                        <div key={index} className="p-6 mb-1.5 rounded-2xl">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h1 className="text-xl  font-bold text-gray-900">
+                                    <h1 className="text-md font-bold text-gray-900">
                                         {schedule.arrivalTime.toLocaleString().slice(0, 10)} - {schedule.arrivalTime.toLocaleString().slice(11, 16)}
                                     </h1>
 
@@ -91,7 +91,7 @@ export default function FlightDetail() {
                                 </div>
 
                                 <div className="text-right">
-                                    <h1 className="text-xl  font-bold text-gray-900">
+                                    <h1 className="text-md font-bold text-gray-900">
                                         {schedule.departureTime.toLocaleString().slice(0, 10)} - {schedule.departureTime.toLocaleString().slice(11, 16)}
                                     </h1>
                                     <div>

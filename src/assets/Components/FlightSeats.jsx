@@ -326,7 +326,7 @@ export default function FlightSeats() {
                             </div>
                         </div>
 
-                        <div className="w-full flex justify-center mt-28">
+                        <div className="w-full flex justify-center mt-16 sm:mt-28">
                             <button command="show-modal" commandfor="dialog" className="rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-gray-950/10">book Seat</button>
                             <el-dialog>
                                 <dialog id="dialog" aria-labelledby="dialog-title" className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">

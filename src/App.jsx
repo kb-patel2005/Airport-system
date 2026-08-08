@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import { Helmet } from "react-helmet";
 import { usercontext } from './assets/Context/usercontext'
 import { staffcontext } from './assets/Context/staffcontext'
+import ScrollToTop from './assets/Components/ScrollToTop';
 
 function App() {
   useEffect(() => {
@@ -27,7 +28,10 @@ function App() {
       </Helmet>
       <staffcontext.Provider value={{ staff, setstaff }}>
         <usercontext.Provider value={{ passenger, setPassenger }}>
-          <Navbar />
+          <header>
+            <Navbar />
+          </header>
+          <ScrollToTop />
           <main>
             <Outlet />
           </main>

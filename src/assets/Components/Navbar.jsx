@@ -38,9 +38,14 @@ export default function Navbar() {
         <h1 className='flex items-center gap-2'>
           <Link to='/' className='flex items-center w-15'>
             <img
-              src="/flight_system.png"
-              alt="Logo"/>
-              <span className='text-2xl font-bold text-blue-700 ml-2'><i>SkyConnect</i></span>
+              src="/flight_system.webp"
+              alt="Airport System"
+              width="50"
+              height="50"
+              decoding="async"
+              className="h-[50px] w-[50px]"
+            />
+            <span className='text-2xl font-bold text-blue-700 ml-2'><i>SkyConnect</i></span>
           </Link>
         </h1>
       </div>
@@ -95,15 +100,15 @@ export default function Navbar() {
             </button>
           </div>
 
-          <li className='py-3 sm:p-2'><Link to="/" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <li className='py-3 sm:p-2'><Link to="/" className="py-5 sm:p-2 text-blue-900 font-normal rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/about" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <li className='py-3 sm:p-2'><Link to="/about" className="py-5 sm:p-2 text-blue-900 font-normal rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMenuOpen(false)}>About</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/flights" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <li className='py-3 sm:p-2'><Link to="/flights" className="py-5 sm:p-2 text-blue-900 font-normal rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMenuOpen(false)}>Flight</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <li className='py-3 sm:p-2'><Link to="/passengerFlight" className="py-5 sm:p-2 text-blue-900 font-normal rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMenuOpen(false)}>booking</Link></li>
-          <li className='py-3 sm:p-2'><Link to="/signin" className="py-5 sm:p-2 text-blue-700 font-bold rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <li className='py-3 sm:p-2'><Link to="/signin" className="py-5 sm:p-2 text-blue-900 font-normal rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMenuOpen(false)}>Sign In</Link></li>
           <button
             type="button"
