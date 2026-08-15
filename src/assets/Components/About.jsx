@@ -6,50 +6,43 @@ const About = () => {
 
     <section>
       <Helmet>
-        {/* Meta tags */}
         <title>About Us | Airport System</title>
+
         <meta
           name="description"
           content="Learn more about Airport System — modern flight booking, live tracking, seat map updates, cancellations, and real-time flight status."
         />
-        <meta
-          name="keywords"
-          content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
+
+        <link
+          rel="canonical"
+          href="https://airportsystem.netlify.app/about"
         />
 
-        {/* Open Graph */}
         <meta property="og:title" content="About Us | Airport System" />
-        <meta property="og:description" content="Learn more about Airport System — modern flight booking, live tracking, seat map updates, cancellations, and real-time flight status." />
-        <meta property="og:image" content="https://airportsystem.netlify.app/preview.png" />
-        <meta property="og:url" content="https://airportsystem.netlify.app/about" />
+        <meta
+          property="og:description"
+          content="Learn more about Airport System — modern flight booking, live tracking, seat map updates, cancellations, and real-time flight status."
+        />
+        <meta
+          property="og:url"
+          content="https://airportsystem.netlify.app/about"
+        />
         <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://airportsystem.netlify.app/hero.webp"
+        />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Us | Airport System" />
-        <meta name="twitter:description" content="Airport System offers real-time flight booking, seat management, and live tracking updates." />
-        <meta name="twitter:image" content="https://airportsystem.netlify.app/preview.png" />
-
-        {/* Canonical */}
-        <link rel="canonical" href="https://airportsystem.netlify.app/about" />
-
-        {/* JSON-LD structured data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "url": "https://airportsystem.netlify.app/about",
-            "name": "About Us | Airport System",
-            "publisher": {
-              "@type": "Person", // use Person for personal site
-              "name": "kb patel",
-              "image": {
-                "@type": "ImageObject",
-                "url": "https://airportsystem.netlify.app/preview.png"
-              }
-            }
-          })}
-        </script>
+        <meta
+          name="twitter:description"
+          content="Airport System offers real-time flight booking, seat management, and live tracking updates."
+        />
+        <meta
+          name="twitter:image"
+          content="https://airportsystem.netlify.app/hero.webp"
+        />
       </Helmet>
 
 

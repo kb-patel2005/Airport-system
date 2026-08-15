@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -13,96 +13,256 @@ import { getFlight } from "../Slices/flightSlice";
 const API_URL =
   "https://airport-system-api-p7mk.onrender.com/public/allFlights";
 
-function ComboBoxSearch({ data, from, onSelect }) {
-  const [selectedFlight, setSelectedFlight] = useState(null);
+/* =========================================================
+   ICONS
+========================================================= */
+
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="h-5 w-5"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-4-4" />
+    </svg>
+  );
+}
+
+function LocationIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="h-5 w-5"
+    >
+      <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </svg>
+  );
+}
+
+function PlaneIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="h-5 w-5"
+    >
+      <path d="m3 12 18-7-5 7 5 7-18-7Z" />
+      <path d="M10 10v-6" />
+      <path d="M10 14v6" />
+    </svg>
+  );
+}
+
+function SwapIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="h-4 w-4"
+    >
+      <path d="M7 7h10l-3-3" />
+      <path d="m17 7-3 3" />
+      <path d="M17 17H7l3 3" />
+      <path d="m7 17 3-3" />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="h-4 w-4"
+    >
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      className="h-4 w-4"
+    >
+      <path d="m5 12 4 4L19 6" />
+    </svg>
+  );
+}
+
+function ChevronIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="h-4 w-4"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+/* =========================================================
+   LOCATION COMBOBOX
+========================================================= */
+
+function LocationCombobox({
+  flights,
+  value,
+  onChange,
+  from,
+  disabled = false,
+}) {
   const [query, setQuery] = useState("");
 
-  const filteredFlights =
-    query === ""
-      ? data
-      : data.filter((flight) => {
-          const searchQuery = query.toLowerCase();
+  /*
+   * Create unique locations.
+   *
+   * This prevents the dropdown from showing the same
+   * airport/city multiple times.
+   */
 
-          const originMatch =
-            flight.origincity?.toLowerCase().includes(searchQuery) ||
-            flight.origincountry?.toLowerCase().includes(searchQuery) ||
-            flight.originstate?.toLowerCase().includes(searchQuery);
+  const locations = useMemo(() => {
+    const map = new Map();
 
-          const destinationMatch =
-            flight.destinationcity
-              ?.toLowerCase()
-              .includes(searchQuery) ||
-            flight.destinationcountry
-              ?.toLowerCase()
-              .includes(searchQuery) ||
-            flight.destinationstate
-              ?.toLowerCase()
-              .includes(searchQuery);
+    flights.forEach((flight) => {
+      const city = from
+        ? flight.origincity
+        : flight.destinationcity;
 
-          return from ? originMatch : destinationMatch;
+      const state = from
+        ? flight.originstate
+        : flight.destinationstate;
+
+      const country = from
+        ? flight.origincountry
+        : flight.destinationcountry;
+
+      if (!city) return;
+
+      const key = `${city}-${state}-${country}`;
+
+      if (!map.has(key)) {
+        map.set(key, {
+          id: key,
+          city,
+          state,
+          country,
         });
+      }
+    });
+
+    return Array.from(map.values());
+  }, [flights, from]);
+
+  const filteredLocations = useMemo(() => {
+    if (!query.trim()) {
+      return locations.slice(0, 10);
+    }
+
+    const search = query.toLowerCase();
+
+    return locations
+      .filter((location) => {
+        return (
+          location.city?.toLowerCase().includes(search) ||
+          location.state?.toLowerCase().includes(search) ||
+          location.country?.toLowerCase().includes(search)
+        );
+      })
+      .slice(0, 10);
+  }, [locations, query]);
 
   return (
     <Combobox
-      value={selectedFlight}
-      onChange={(flight) => {
-        setSelectedFlight(flight);
-        onSelect?.(flight);
+      value={value}
+      onChange={(location) => {
+        onChange(location);
+        setQuery("");
       }}
       onClose={() => setQuery("")}
+      disabled={disabled}
     >
       <div className="relative">
-        {/* MAIN COMBOBOX */}
-        <div className="rounded-xl border border-gray-300 bg-white px-4 py-2 transition focus-within:border-indigo-600 focus-within:ring-2 focus-within:ring-indigo-100">
-          {/* TITLE */}
-          <div className="text-xs font-semibold text-gray-500">
-            {from ? "From" : "To"}
-          </div>
+        <ComboboxInput
+          aria-label={from ? "Departure location" : "Destination location"}
+          displayValue={(location) =>
+            location
+              ? `${location.city}, ${location.country}`
+              : ""
+          }
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder={
+            from
+              ? "Select departure"
+              : "Select destination"
+          }
+          className="h-[52px] w-full border-0 bg-transparent pr-7 text-sm font-semibold text-slate-800 outline-none placeholder:text-slate-400 focus:outline-none focus:ring-0"
+        />
 
-          {/* INPUT */}
-          <ComboboxInput
-            id={from ? "from-flight" : "to-flight"}
-            aria-label={from ? "From airport" : "To airport"}
-            displayValue={(flight) =>
-              flight
-                ? from
-                  ? `${flight.origincity}, ${flight.originstate}, ${flight.origincountry}`
-                  : `${flight.destinationcity}, ${flight.destinationstate}, ${flight.destinationcountry}`
-                : ""
-            }
-            placeholder={
-              from
-                ? "Select departure city"
-                : "Select destination city"
-            }
-            onChange={(event) => setQuery(event.target.value)}
-            className="w-full border-0 bg-transparent p-0 pt-1 text-sm font-medium text-gray-900 outline-none focus:border-0 focus:outline-none focus:ring-0"
-          />
+        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-slate-400">
+          <ChevronIcon />
         </div>
 
-        {/* OPTIONS */}
-        <ComboboxOptions className="absolute left-0 right-0 z-50 mt-2 max-h-72 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
-          {filteredFlights.length === 0 ? (
-            <div className="px-4 py-3 text-sm text-gray-500">
-              No location found
+        <ComboboxOptions className="absolute left-0 right-0 top-[60px] z-[100] max-h-[280px] overflow-y-auto rounded-2xl border border-slate-100 bg-white p-2 shadow-[0_15px_40px_rgba(0,0,0,0.15)]">
+          {filteredLocations.length === 0 ? (
+            <div className="px-4 py-5 text-center">
+              <LocationIcon />
+
+              <p className="mt-2 text-sm font-semibold text-slate-700">
+                No location found
+              </p>
+
+              <p className="mt-1 text-xs text-slate-400">
+                Try another city or country
+              </p>
             </div>
           ) : (
-            filteredFlights.map((flight) => (
+            filteredLocations.map((location) => (
               <ComboboxOption
-                key={`${flight.id}-${from ? "from" : "to"}`}
-                value={flight}
-                className="cursor-pointer rounded-lg px-4 py-3 data-[focus]:bg-indigo-50"
+                key={location.id}
+                value={location}
+                className="group cursor-pointer rounded-xl px-3 py-3 data-[focus]:bg-[#EAF9FA]"
               >
-                <div className="font-semibold text-gray-900">
-                  {from
-                    ? flight.origincity
-                    : flight.destinationcity}
-                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAF9FA] text-[#27A3AC]">
+                    <LocationIcon />
+                  </div>
 
-                <div className="mt-1 text-xs text-gray-500">
-                  {from
-                    ? `${flight.originstate}, ${flight.origincountry}`
-                    : `${flight.destinationstate}, ${flight.destinationcountry}`}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-bold text-slate-800">
+                      {location.city}
+                    </p>
+
+                    <p className="truncate text-xs text-slate-500">
+                      {location.state}, {location.country}
+                    </p>
+                  </div>
+
+                  <div className="hidden text-[#27A3AC] group-data-[selected]:block">
+                    <CheckIcon />
+                  </div>
                 </div>
               </ComboboxOption>
             ))
@@ -113,6 +273,105 @@ function ComboBoxSearch({ data, from, onSelect }) {
   );
 }
 
+/* =========================================================
+   FLIGHT CARD
+========================================================= */
+
+function FlightCard({ flight, onBook }) {
+  return (
+    <article className="group rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_8px_25px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(15,23,42,0.12)]">
+      {/* Airline */}
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EAF9FA] text-[#27A3AC]">
+            <PlaneIcon />
+          </div>
+
+          <div>
+            <p className="text-xs text-slate-400">
+              Airline
+            </p>
+
+            <p className="text-sm font-bold text-slate-800">
+              {flight.airline || "Krish Airline"}
+            </p>
+          </div>
+        </div>
+
+        <span className="rounded-full bg-[#EAF9FA] px-3 py-1 text-[11px] font-bold text-[#19808A]">
+          Available
+        </span>
+      </div>
+
+      {/* Route */}
+
+      <div className="mt-6 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="truncate text-lg font-extrabold text-[#1397A1]">
+            {flight.origincity}
+          </p>
+
+          <p className="mt-1 truncate text-xs text-slate-500">
+            {flight.originstate}, {flight.origincountry}
+          </p>
+        </div>
+
+        <div className="flex min-w-[70px] flex-1 items-center justify-center">
+          <div className="h-px flex-1 bg-slate-200" />
+
+          <div className="mx-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF9FA] text-[#27A3AC]">
+            <ArrowIcon />
+          </div>
+
+          <div className="h-px flex-1 bg-slate-200" />
+        </div>
+
+        <div className="min-w-0 text-right">
+          <p className="truncate text-lg font-extrabold text-[#1397A1]">
+            {flight.destinationcity}
+          </p>
+
+          <p className="mt-1 truncate text-xs text-slate-500">
+            {flight.destinationstate},{" "}
+            {flight.destinationcountry}
+          </p>
+        </div>
+      </div>
+
+      {/* Divider */}
+
+      <div className="my-5 border-t border-dashed border-slate-200" />
+
+      {/* Bottom */}
+
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className="text-xs text-slate-400">
+            Starting from
+          </p>
+
+          <p className="mt-1 text-xl font-extrabold text-slate-900">
+            ₹{flight.price ?? "--"}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onBook(flight.id)}
+          className="rounded-xl bg-[#27A3AC] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#1397A1] active:scale-[0.97]"
+        >
+          Book Flight
+        </button>
+      </div>
+    </article>
+  );
+}
+
+/* =========================================================
+   MAIN COMPONENT
+========================================================= */
+
 export default function FlightSearch() {
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
@@ -120,326 +379,412 @@ export default function FlightSearch() {
   const [flights, setFlights] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loadingLocations, setLoadingLocations] =
+    useState(true);
+
+  const [searching, setSearching] = useState(false);
+
   const [searched, setSearched] = useState(false);
+
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  /*
-   * =====================================================
-   * FETCH FLIGHTS ONLY WHEN USER CLICKS SEARCH
-   * =====================================================
-   */
-  const handleSearch = async () => {
+  /* =====================================================
+     LOAD FLIGHTS FOR LOCATION DROPDOWN
+  ===================================================== */
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadFlights = async () => {
+      try {
+        setLoadingLocations(true);
+        setError("");
+
+        const response = await axios.get(API_URL, {
+          params: {
+            page: 0,
+            size: 100,
+          },
+        });
+
+        if (!mounted) return;
+
+        const data = response.data?.content || [];
+
+        setFlights(data);
+      } catch (err) {
+        console.error(
+          "Unable to load flight locations:",
+          err
+        );
+
+        if (mounted) {
+          setError(
+            "Unable to load flight locations. Please try again."
+          );
+        }
+      } finally {
+        if (mounted) {
+          setLoadingLocations(false);
+        }
+      }
+    };
+
+    loadFlights();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  /* =====================================================
+     SWAP LOCATIONS
+  ===================================================== */
+
+  const handleSwap = () => {
+    setFrom(to);
+    setTo(from);
+
+    setSearchResults([]);
+    setSearched(false);
+  };
+
+  /* =====================================================
+     SEARCH
+  ===================================================== */
+
+  const handleSearch = () => {
     if (!from || !to) {
-      alert("Please select both origin and destination");
+      setError(
+        "Please select both departure and destination."
+      );
+
+      return;
+    }
+
+    if (
+      from.city === to.city &&
+      from.state === to.state &&
+      from.country === to.country
+    ) {
+      setError(
+        "Departure and destination cannot be the same."
+      );
+
       return;
     }
 
     try {
-      setLoading(true);
+      setSearching(true);
+      setError("");
       setSearched(true);
-      setSearchResults([]);
 
-      /*
-       * Fetch first page only.
-       *
-       * IMPORTANT:
-       * We are no longer fetching all pages when
-       * Home component loads.
-       */
-      const response = await axios.get(API_URL, {
-        params: {
-          page: 0,
-          size: 20,
-        },
+      const results = flights.filter((flight) => {
+        const originMatches =
+          flight.origincity === from.city &&
+          flight.originstate === from.state &&
+          flight.origincountry === from.country;
+
+        const destinationMatches =
+          flight.destinationcity === to.city &&
+          flight.destinationstate === to.state &&
+          flight.destinationcountry === to.country;
+
+        return originMatches && destinationMatches;
       });
 
-      const fetchedFlights = response.data?.content || [];
+      setTimeout(() => {
+        setSearchResults(results);
+        setSearching(false);
+      }, 400);
+    } catch (err) {
+      console.error("Flight search failed:", err);
 
-      setFlights(fetchedFlights);
-
-      /*
-       * Filter flights after API response
-       */
-      const results = fetchedFlights.filter(
-        (flight) =>
-          flight.origincity === from.origincity &&
-          flight.originstate === from.originstate &&
-          flight.origincountry === from.origincountry &&
-          flight.destinationcity === to.destinationcity &&
-          flight.destinationstate === to.destinationstate &&
-          flight.destinationcountry === to.destinationcountry
-      );
-
-      setSearchResults(results);
-    } catch (error) {
-      console.error("Error fetching flights:", error);
       setSearchResults([]);
-    } finally {
-      setLoading(false);
+      setSearching(false);
+      setError(
+        "Something went wrong while searching flights."
+      );
     }
   };
 
-  /*
-   * =====================================================
-   * BOOK FLIGHT
-   * =====================================================
-   */
+  /* =====================================================
+     BOOK FLIGHT
+  ===================================================== */
+
   const handleBookFlight = async (flightId) => {
     try {
       await dispatch(getFlight(flightId));
+
       navigate("/flightDetail");
-    } catch (error) {
-      console.error("Error fetching flight:", error);
+    } catch (err) {
+      console.error(
+        "Error fetching selected flight:",
+        err
+      );
+
+      setError(
+        "Unable to open flight details. Please try again."
+      );
     }
   };
 
   return (
     <section
       id="flight-search"
-      className="w-full bg-white px-4 py-16 sm:px-6"
+      className="relative w-full bg-white px-4 py-16 sm:px-6 lg:py-24"
     >
-      {/* =====================================
-          1100px CONTAINER
-      ===================================== */}
-
       <div className="mx-auto w-full max-w-[1100px]">
+        {/* =================================================
+            SECTION HEADER
+        ================================================= */}
 
-        {/* =====================================
-            HEADER
-        ===================================== */}
+        <div className="mx-auto max-w-[680px] text-center">
+          <span className="inline-flex items-center rounded-full bg-[#EAF9FA] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#19808A]">
+            Flight Search
+          </span>
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-indigo-700">
-            Search Flight
-          </h1>
+          <h2 className="mt-4 font-roboto text-3xl font-extrabold leading-tight text-[#1397A1] sm:text-4xl lg:text-[44px]">
+            Find your perfect flight
+          </h2>
 
-          <p className="mt-2 text-sm font-semibold text-red-600">
-            It gives demo results, not real ones.
+          <p className="mx-auto mt-3 max-w-[580px] text-sm leading-6 text-slate-500 sm:text-base">
+            Search available flights by selecting your
+            departure and destination.
           </p>
 
-          <p className="mt-1 text-sm text-gray-600">
-            Enter your origin and destination to find
-            available flights.
+          <p className="mt-2 text-xs font-semibold text-slate-400">
+            Demo flight data — prices and availability may
+            not represent real-time flights.
           </p>
         </div>
 
-        {/* =====================================
+        {/* =================================================
             SEARCH BOX
-        ===================================== */}
+        ================================================= */}
 
-        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5 shadow-sm sm:p-6">
+        <div className="relative z-30 mx-auto mt-10 max-w-[900px] rounded-[28px] bg-[#88C3C7] p-4 shadow-[0_20px_45px_rgba(39,163,172,0.22)] sm:p-6 lg:rounded-[36px] lg:p-7">
+          <div className="mb-5 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-[#27A3AC]">
+              <SearchIcon />
+            </div>
 
-          <div className="grid gap-5 md:grid-cols-[1fr_1fr_auto] md:items-end">
+            <div>
+              <h3 className="font-poetsen text-xl text-white">
+                Search Flight
+              </h3>
 
+              <p className="text-xs text-white/80">
+                Where would you like to go?
+              </p>
+            </div>
+          </div>
+
+          {/* Search fields */}
+
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto_1fr_auto] md:items-center">
             {/* FROM */}
 
-            <ComboBoxSearch
-              data={flights}
-              from={true}
-              onSelect={setFrom}
-            />
+            <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="text-[#27A3AC]">
+                  <LocationIcon />
+                </span>
+
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  From
+                </span>
+              </div>
+
+              <LocationCombobox
+                flights={flights}
+                value={from}
+                onChange={setFrom}
+                from={true}
+                disabled={loadingLocations}
+              />
+            </div>
+
+            {/* SWAP */}
+
+            <button
+              type="button"
+              onClick={handleSwap}
+              disabled={!from && !to}
+              aria-label="Swap departure and destination"
+              className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/60 bg-white text-[#27A3AC] shadow-sm transition hover:rotate-180 hover:bg-[#EAF9FA] disabled:cursor-not-allowed disabled:opacity-50 md:mx-0"
+            >
+              <SwapIcon />
+            </button>
 
             {/* TO */}
 
-            <ComboBoxSearch
-              data={flights}
-              from={false}
-              onSelect={setTo}
-            />
+            <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="text-[#27A3AC]">
+                  <PlaneIcon />
+                </span>
+
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  To
+                </span>
+              </div>
+
+              <LocationCombobox
+                flights={flights}
+                value={to}
+                onChange={setTo}
+                from={false}
+                disabled={loadingLocations}
+              />
+            </div>
 
             {/* SEARCH BUTTON */}
 
             <button
               type="button"
               onClick={handleSearch}
-              disabled={loading}
-              className="h-[48px] rounded-xl bg-indigo-700 px-10 font-semibold text-white shadow-sm transition hover:bg-indigo-800 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
+              disabled={
+                searching ||
+                loadingLocations ||
+                !from ||
+                !to
+              }
+              className="flex h-[76px] items-center justify-center gap-2 rounded-2xl bg-[#27A3AC] px-7 font-bold text-white shadow-md transition hover:bg-[#1397A1] active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-white/50 disabled:text-white/80"
             >
-              {loading ? "Searching..." : "Search"}
-            </button>
+              <SearchIcon />
 
+              <span>
+                {searching ? "Searching..." : "Search"}
+              </span>
+            </button>
           </div>
+
+          {/* Loading locations */}
+
+          {loadingLocations && (
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs font-semibold text-white">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              Loading flight locations...
+            </div>
+          )}
+
+          {/* Error */}
+
+          {error && (
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-600">
+              {error}
+            </div>
+          )}
         </div>
 
-        {/* =====================================
-            LOADING
-        ===================================== */}
-
-        {loading && (
-          <div className="mt-8 rounded-2xl border border-indigo-100 bg-indigo-50 px-6 py-8 text-center">
-            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-700" />
-
-            <p className="mt-3 text-sm font-medium text-indigo-700">
-              Searching available flights...
-            </p>
-          </div>
-        )}
-
-        {/* =====================================
+        {/* =================================================
             RESULTS
-        ===================================== */}
+        ================================================= */}
 
-        {!loading && searched && (
-          <div className="mt-10">
+        {searched && !searching && (
+          <div className="relative z-10 mt-14">
+            {/* Results header */}
 
-            {searchResults.length > 0 ? (
-              <>
-
-                {/* RESULTS HEADER */}
-
-                <div className="mb-5 flex items-center justify-between">
-
-                  <h2 className="text-xl font-bold text-gray-900">
-                    Search Results
-                  </h2>
-
-                  <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
-                    {searchResults.length}{" "}
-                    {searchResults.length === 1
-                      ? "Flight"
-                      : "Flights"}
-                  </span>
-
-                </div>
-
-                {/* RESULTS GRID */}
-
-                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-
-                  {searchResults.map((flight) => (
-
-                    <div
-                      key={flight.id}
-                      className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-                    >
-
-                      {/* ROUTE */}
-
-                      <div className="flex items-center justify-between gap-3">
-
-                        {/* FROM */}
-
-                        <div className="min-w-0">
-
-                          <p className="truncate text-lg font-bold text-indigo-700">
-                            {flight.origincity}
-                          </p>
-
-                          <p className="mt-1 text-xs text-gray-500">
-                            {flight.originstate},{" "}
-                            {flight.origincountry}
-                          </p>
-
-                        </div>
-
-                        {/* ARROW */}
-
-                        <div className="flex shrink-0 items-center">
-
-                          <div className="h-px w-6 bg-gray-300" />
-
-                          <span className="px-1 text-xl font-bold text-indigo-600">
-                            →
-                          </span>
-
-                          <div className="h-px w-6 bg-gray-300" />
-
-                        </div>
-
-                        {/* TO */}
-
-                        <div className="min-w-0 text-right">
-
-                          <p className="truncate text-lg font-bold text-indigo-700">
-                            {flight.destinationcity}
-                          </p>
-
-                          <p className="mt-1 text-xs text-gray-500">
-                            {flight.destinationstate},{" "}
-                            {flight.destinationcountry}
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                      {/* DIVIDER */}
-
-                      <div className="my-5 border-t border-gray-100" />
-
-                      {/* PRICE */}
-
-                      <div className="flex items-center justify-between">
-
-                        <span className="text-sm text-gray-500">
-                          Price
-                        </span>
-
-                        <span className="text-lg font-bold text-indigo-700">
-                          ₹{flight.price}
-                        </span>
-
-                      </div>
-
-                      {/* AIRLINE */}
-
-                      <div className="mt-3 flex items-center justify-between">
-
-                        <span className="text-sm text-gray-500">
-                          Airline
-                        </span>
-
-                        <span className="text-sm font-semibold text-gray-800">
-                          {flight.airline}
-                        </span>
-
-                      </div>
-
-                      {/* BOOK BUTTON */}
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleBookFlight(flight.id)
-                        }
-                        className="mt-5 w-full rounded-xl bg-indigo-700 px-4 py-3 font-semibold text-white transition hover:bg-indigo-800 active:scale-[0.98]"
-                      >
-                        Book Flight
-                      </button>
-
-                    </div>
-
-                  ))}
-
-                </div>
-              </>
-            ) : (
-              /* NO RESULTS */
-
-              <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center">
-
-                <div className="text-4xl">
-                  ✈️
-                </div>
-
-                <h3 className="mt-3 text-lg font-bold text-gray-800">
-                  No Flights Found
-                </h3>
-
-                <p className="mt-1 text-sm text-gray-500">
-                  No flights are available for the selected
-                  route.
+            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-[#27A3AC]">
+                  Search results
                 </p>
 
+                <h3 className="mt-1 text-2xl font-extrabold text-slate-900">
+                  Available flights
+                </h3>
+              </div>
+
+              {searchResults.length > 0 && (
+                <span className="w-fit rounded-full bg-[#EAF9FA] px-4 py-2 text-sm font-bold text-[#19808A]">
+                  {searchResults.length}{" "}
+                  {searchResults.length === 1
+                    ? "flight"
+                    : "flights"}{" "}
+                  found
+                </span>
+              )}
+            </div>
+
+            {/* Results */}
+
+            {searchResults.length > 0 ? (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {searchResults.map((flight) => (
+                  <FlightCard
+                    key={flight.id}
+                    flight={flight}
+                    onBook={handleBookFlight}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-[28px] border border-dashed border-slate-200 bg-slate-50 px-6 py-14 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF9FA] text-[#27A3AC]">
+                  <PlaneIcon />
+                </div>
+
+                <h3 className="mt-5 text-xl font-extrabold text-slate-800">
+                  No flights found
+                </h3>
+
+                <p className="mx-auto mt-2 max-w-[420px] text-sm leading-6 text-slate-500">
+                  We couldn't find a flight for this route.
+                  Try selecting another departure or
+                  destination.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFrom(null);
+                    setTo(null);
+                    setSearchResults([]);
+                    setSearched(false);
+                    setError("");
+                  }}
+                  className="mt-6 rounded-full bg-[#27A3AC] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1397A1]"
+                >
+                  Search another route
+                </button>
               </div>
             )}
-
           </div>
         )}
 
+        {/* =================================================
+            INITIAL STATE
+        ================================================= */}
+
+        {!searched && !loadingLocations && (
+          <div className="mx-auto mt-12 flex max-w-[700px] flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-slate-500 sm:text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-[#27A3AC]">
+                <CheckIcon />
+              </span>
+              Easy search
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[#27A3AC]">
+                <CheckIcon />
+              </span>
+              Live seat availability
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[#27A3AC]">
+                <CheckIcon />
+              </span>
+              Secure booking
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

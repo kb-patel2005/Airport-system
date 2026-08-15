@@ -54,52 +54,49 @@ export default function SignUp() {
   return (
     <section>
       <Helmet>
-        {/* Meta tags */}
         <title>Sign Up | Airport System</title>
+
         <meta
           name="description"
           content="Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking."
         />
-        <meta
-          name="keywords"
-          content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
-        />
+
+        {/* Don't index authentication page */}
+        <meta name="robots" content="noindex, follow" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Sign Up | Airport System" />
-        <meta property="og:description" content="Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking." />
-        <meta property="og:image" content="https://airportsystem.netlify.app/flight_system.png" />
-        <meta property="og:url" content="https://airportsystem.netlify.app/signup" />
+        <meta
+          property="og:description"
+          content="Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking."
+        />
+        <meta
+          property="og:image"
+          content="https://airportsystem.netlify.app/flight_system.webp"
+        />
+        <meta
+          property="og:url"
+          content="https://airportsystem.netlify.app/signup"
+        />
         <meta property="og:type" content="website" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sign Up | Airport System" />
-        <meta name="twitter:description" content="Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking." />
-        <meta name="twitter:image" content="https://airportsystem.netlify.app/flight_system.png" />
+        <meta
+          name="twitter:description"
+          content="Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking."
+        />
+        <meta
+          name="twitter:image"
+          content="https://airportsystem.netlify.app/flight_system.webp"
+        />
 
         {/* Canonical */}
-        <link rel="canonical" href="https://airportsystem.netlify.app/signup" />
-
-        {/* JSON-LD structured data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "url": "https://airportsystem.netlify.app/signup",
-            "name": "Sign Up | Airport System",
-            "description":
-              "Create your Airport System account to book flights, manage bookings, and enjoy real-time seat maps and flight tracking.",
-            "publisher": {
-              "@type": "Person",
-              "name": "kb patel",
-              "image": {
-                "@type": "ImageObject",
-                "url": "https://airportsystem.netlify.app/flight_system.png"
-              }
-            }
-          })}
-        </script>
+        <link
+          rel="canonical"
+          href="https://airportsystem.netlify.app/signup"
+        />
       </Helmet>
 
       <Suspense fallback={<div>Loading...</div>}>
@@ -124,12 +121,12 @@ export default function SignUp() {
                   alert("passenger dispatcher running......");
                   const result = await dispatch(addData(userData));
                   setPassenger(result.payload.passenger);
-                  navigate('/Signin');
+                  navigate('/signin');
                 } else {
                   const upadatedUserData = { ...userData, role: role };
                   setstaff(upadatedUserData);
                   await dispatch(setStaff(upadatedUserData));
-                  navigate('/Signin');
+                  navigate('/signin');
                 }
               }}>
               <div className='flex flex-col justify-center items-center h-[100%]  gap-5'>

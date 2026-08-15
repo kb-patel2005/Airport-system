@@ -42,52 +42,45 @@ export default function SighIn() {
   return (
     <div className="w-full min-h-[70vh] flex flex-col justify-center items-center">
       <Helmet>
-        {/* Meta tags */}
         <title>Sign In | Airport System</title>
+
         <meta
           name="description"
           content="Sign in to your Airport System account to manage bookings, view details, and access real-time seat maps and flight status tracking."
         />
-        <meta
-          name="keywords"
-          content="flight booking, flight ticket, flight deals, flight schedule, flight seat map, flight status, airport system, live flight tracking"
-        />
 
-        {/* Open Graph */}
+        <meta name="robots" content="noindex, follow" />
+
         <meta property="og:title" content="Sign In | Airport System" />
-        <meta property="og:description" content="Sign in to your Airport System account to manage bookings, view details, and access real-time seat maps and flight status tracking." />
-        <meta property="og:image" content="https://airportsystem.netlify.app/flight_system.png" />
-        <meta property="og:url" content="https://airportsystem.netlify.app/signin" />
+        <meta
+          property="og:description"
+          content="Sign in to your Airport System account to manage bookings, view details, and access real-time seat maps and flight status tracking."
+        />
+        <meta
+          property="og:image"
+          content="https://airportsystem.netlify.app/flight_system.webp"
+        />
+        <meta
+          property="og:url"
+          content="https://airportsystem.netlify.app/signin"
+        />
         <meta property="og:type" content="website" />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sign In | Airport System" />
-        <meta name="twitter:description" content="Access your Airport System account to manage bookings, cancellations, and live flight updates." />
-        <meta name="twitter:image" content="https://airportsystem.netlify.app/flight_system.png" />
+        <meta
+          name="twitter:description"
+          content="Access your Airport System account to manage bookings, cancellations, and live flight updates."
+        />
+        <meta
+          name="twitter:image"
+          content="https://airportsystem.netlify.app/flight_system.webp"
+        />
 
-        {/* Canonical */}
-        <link rel="canonical" href="https://airportsystem.netlify.app/signin" />
-
-        {/* JSON-LD structured data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "url": "https://airportsystem.netlify.app/signin",
-            "name": "Sign In | Airport System",
-            "description":
-              "Sign in to your Airport System account to manage bookings, view details, and access real-time seat maps and flight status tracking.",
-            "publisher": {
-              "@type": "Person",
-              "name": "kb patel",
-              "image": {
-                "@type": "ImageObject",
-                "url": "https://airportsystem.netlify.app/flight_system.png"
-              }
-            }
-          })}
-        </script>
+        <link
+          rel="canonical"
+          href="https://airportsystem.netlify.app/signin"
+        />
       </Helmet>
 
 

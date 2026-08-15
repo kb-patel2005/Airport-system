@@ -89,12 +89,12 @@ const StreamingFlights = () => {
 
         <meta
           property="og:image"
-          content="https://airportsystem.netlify.app/preview.png"
+          content="https://airportsystem.netlify.app/hero.webp"
         />
 
         <meta
           property="og:url"
-          content="https://airportsystem.netlify.app/dashboard"
+          content="https://airportsystem.netlify.app/"
         />
 
         <meta
@@ -121,14 +121,14 @@ const StreamingFlights = () => {
 
         <meta
           name="twitter:image"
-          content="https://airportsystem.netlify.app/preview.png"
+          content="https://airportsystem.netlify.app/hero.webp"
         />
 
         {/* Canonical */}
 
         <link
           rel="canonical"
-          href="https://airportsystem.netlify.app/dashboard"
+          href="https://airportsystem.netlify.app/flights"
         />
 
         {/* JSON-LD */}
@@ -137,7 +137,7 @@ const StreamingFlights = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            url: "https://airportsystem.netlify.app/dashboard",
+            url: "https://airportsystem.netlify.app/",
             name: "All Flights Dashboard | Airport System",
             description:
               "View available flights, schedules, prices, bookings, cancellations, and live updates with Airport System.",
@@ -146,7 +146,7 @@ const StreamingFlights = () => {
               name: "kb patel",
               image: {
                 "@type": "ImageObject",
-                url: "https://airportsystem.netlify.app/preview.png",
+                url: "https://airportsystem.netlify.app/hero.webp",
               },
             },
           })}
