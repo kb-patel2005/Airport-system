@@ -149,77 +149,77 @@ export default function Home() {
   return (
     <>
 
-      <Helmet>
-        <title>
-          Flight Booking and Flight Ticket Deals Online | Krish Airline
-        </title>
+        <Helmet>
+          <title>
+            Flight Booking and Flight Ticket Deals Online | Krish Airline
+          </title>
 
-        <meta
-          name="description"
-          content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
-        />
+          <meta
+            name="description"
+            content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
+          />
 
-        <meta
-          property="og:title"
-          content="Flight Booking and Flight Ticket Deals Online"
-        />
+          <meta
+            property="og:title"
+            content="Flight Booking and Flight Ticket Deals Online"
+          />
 
-        <meta
-          property="og:description"
-          content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
-        />
+          <meta
+            property="og:description"
+            content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
+          />
 
-        <meta
-          property="og:image"
-          content="https://airportsystem.netlify.app/flight_system.webp"
-        />
+          <meta
+            property="og:image"
+            content="https://airportsystem.netlify.app/flight_system.webp"
+          />
 
-        <meta
-          property="og:url"
-          content="https://airportsystem.netlify.app/"
-        />
+          <meta
+            property="og:url"
+            content="https://airportsystem.netlify.app/"
+          />
 
-        <meta property="og:type" content="website" />
+          <meta property="og:type" content="website" />
 
-        <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:card" content="summary_large_image" />
 
-        <meta
-          name="twitter:title"
-          content="Book Flights Online | Live Seat Updates & Tracking"
-        />
+          <meta
+            name="twitter:title"
+            content="Book Flights Online | Live Seat Updates & Tracking"
+          />
 
-        <meta
-          name="twitter:description"
-          content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
-        />
+          <meta
+            name="twitter:description"
+            content="Book flights online with live seat updates, seat maps, real-time flight tracking, and the best ticket deals."
+          />
 
-        <meta
-          name="twitter:image"
-          content="https://airportsystem.netlify.app/flight_system.webp"
-        />
+          <meta
+            name="twitter:image"
+            content="https://airportsystem.netlify.app/flight_system.webp"
+          />
 
-        <link
-          rel="canonical"
-          href="https://airportsystem.netlify.app/"
-        />
+          <link
+            rel="canonical"
+            href="https://airportsystem.netlify.app/"
+          />
 
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            url: "https://airportsystem.netlify.app/",
-            name: "Krish Airline",
-            publisher: {
-              "@type": "Person",
-              name: "Krish Patel",
-              image: {
-                "@type": "ImageObject",
-                url: "https://airportsystem.netlify.app/flight_system.webp",
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              url: "https://airportsystem.netlify.app/",
+              name: "Krish Airline",
+              publisher: {
+                "@type": "Person",
+                name: "Krish Patel",
+                image: {
+                  "@type": "ImageObject",
+                  url: "https://airportsystem.netlify.app/flight_system.webp",
+                },
               },
-            },
-          })}
-        </script>
-      </Helmet>
+            })}
+          </script>
+        </Helmet>
 
       <main className="min-h-screen overflow-hidden bg-white text-gray-900">
 
