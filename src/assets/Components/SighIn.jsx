@@ -42,14 +42,14 @@ export default function SighIn() {
   return (
     <div className="w-full min-h-[70vh] flex flex-col justify-center items-center">
       <Helmet>
-        <title>Sign In | Airport System</title>
+        <title>Ticket book and enjoy your journey| Airport System </title>
 
         <meta
           name="description"
           content="Sign in to your Airport System account to manage bookings, view details, and access real-time seat maps and flight status tracking."
         />
 
-        <meta name="robots" content="noindex, follow" />
+        <meta name="robots" content="index, follow" />
 
         <meta property="og:title" content="Sign In | Airport System" />
         <meta
@@ -105,7 +105,7 @@ export default function SighIn() {
               try {
                 const result = await dispatch(findData(data));
                 if (Object.keys(result.payload).length === 0) {
-                  navigate('/Signin');
+                  navigate('/signin');
                 } else {
                   if (data.role === 'passenger') {
                     setPassenger(result.payload.passenger);

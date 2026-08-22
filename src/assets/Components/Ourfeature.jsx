@@ -7,7 +7,7 @@ export default function Ourfeature() {
   return (
     <>
       <section className="w-full mx-auto px-10 py-16" style={{ background: 'linear-gradient(rgb(153, 203, 230),#00000000)' }}>
-        <Suspense fallback={<></>}><FlightSearch /></Suspense>
+        <Suspense fallback={<> find places for you </>}><FlightSearch /></Suspense>
         <h2 className="text-3xl font-bold text-center text-blue-800 m-20">
           ✨ Our Features
         </h2>

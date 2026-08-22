@@ -54,7 +54,7 @@ export default function SignUp() {
   return (
     <section>
       <Helmet>
-        <title>Sign Up | Airport System</title>
+        <title>flights booking create account with us | Airport System</title>
 
         <meta
           name="description"
@@ -62,7 +62,7 @@ export default function SignUp() {
         />
 
         {/* Don't index authentication page */}
-        <meta name="robots" content="noindex, follow" />
+        <meta name="robots" content="index, follow" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Sign Up | Airport System" />
@@ -76,7 +76,7 @@ export default function SignUp() {
         />
         <meta
           property="og:url"
-          content="https://airportsystem.netlify.app/Signup"
+          content="https://airportsystem.netlify.app/signup"
         />
         <meta property="og:type" content="website" />
 
@@ -95,7 +95,7 @@ export default function SignUp() {
         {/* Canonical */}
         <link
           rel="canonical"
-          href="https://airportsystem.netlify.app/Signup"
+          href="https://airportsystem.netlify.app/signup"
         />
       </Helmet>
 
@@ -121,12 +121,12 @@ export default function SignUp() {
                   alert("passenger dispatcher running......");
                   const result = await dispatch(addData(userData));
                   setPassenger(result.payload.passenger);
-                  navigate('/Signin');
+                  navigate('/signin');
                 } else {
                   const upadatedUserData = { ...userData, role: role };
                   setstaff(upadatedUserData);
                   await dispatch(setStaff(upadatedUserData));
-                  navigate('/Signin');
+                  navigate('/signin');
                 }
               }}>
               <div className='flex flex-col justify-center items-center h-[100%]  gap-5'>
@@ -210,7 +210,7 @@ export default function SignUp() {
                   value='submit'
                   className='bg-indigo-700 w-[100%] max-w-[500px] p-1.5 rounded text-xl text-white' />
 
-                <p className='text-sm'>Already have an account? <Link to='/Signin' className='text-indigo-700 underline cursor-pointer text-sm'>Sign In</Link></p>
+                <p className='text-sm'>Already have an account? <Link to='/signin' className='text-indigo-700 underline cursor-pointer text-sm'>Sign In</Link></p>
               </div>
             </form>
             <div className="container mx-auto p-4">

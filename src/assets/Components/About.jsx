@@ -6,7 +6,7 @@ const About = () => {
 
     <section>
       <Helmet>
-        <title>About Us | Airport System</title>
+        <title>Airport System | about flight bookings and all learn here</title>
 
         <meta
           name="description"

@@ -63,12 +63,9 @@ const StreamingFlights = () => {
 
   return (
     <>
-      {/* =========================================
-          SEO
-      ========================================= */}
 
       <Helmet>
-        <title>All Flights Dashboard | Airport System</title>
+        <title>Flights status and schedules available | Airport System</title>
 
         <meta
           name="description"
