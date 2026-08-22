@@ -24,8 +24,8 @@ const routes = createBrowserRouter([
       { path: '/about', element: 
       <React.Suspense fallback={<></>}><About /></React.Suspense> },
       { path: '/flights', element: <Flights /> },
-      { path: '/signin', element: <SighIn /> },
-      { path: '/signup', element: <SignUp /> },
+      { path: '/Signin', element: <SighIn /> },
+      { path: '/Signup', element: <SignUp /> },
       { path: '/AddFlight', element: <FlightAdd /> },
       { path: '/passengerFlight', element: <PassengerFlight /> },
       { path: '/FlightSeats', element: <FlightSeats /> },

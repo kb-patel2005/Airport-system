@@ -76,7 +76,7 @@ export default function SignUp() {
         />
         <meta
           property="og:url"
-          content="https://airportsystem.netlify.app/signup"
+          content="https://airportsystem.netlify.app/Signup"
         />
         <meta property="og:type" content="website" />
 
@@ -95,7 +95,7 @@ export default function SignUp() {
         {/* Canonical */}
         <link
           rel="canonical"
-          href="https://airportsystem.netlify.app/signup"
+          href="https://airportsystem.netlify.app/Signup"
         />
       </Helmet>
 
@@ -121,12 +121,12 @@ export default function SignUp() {
                   alert("passenger dispatcher running......");
                   const result = await dispatch(addData(userData));
                   setPassenger(result.payload.passenger);
-                  navigate('/signin');
+                  navigate('/Signin');
                 } else {
                   const upadatedUserData = { ...userData, role: role };
                   setstaff(upadatedUserData);
                   await dispatch(setStaff(upadatedUserData));
-                  navigate('/signin');
+                  navigate('/Signin');
                 }
               }}>
               <div className='flex flex-col justify-center items-center h-[100%]  gap-5'>

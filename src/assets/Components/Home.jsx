@@ -253,7 +253,7 @@ export default function Home() {
                 </Link>
 
                 <Link
-                  to={selector.passenger ? "/AddFlight" : "/signup"}
+                  to={selector.passenger ? "/AddFlight" : "/Signup"}
                   className="flex h-[43px] w-[135px] items-center justify-center rounded-full bg-[#EEE0CC] text-sm shadow-[10px_10px_12px_rgba(0,0,0,0.20)] transition hover:-translate-y-1 sm:h-[47px] sm:w-[160px]"
                 >
                   {selector.passenger ? "Add Flight" : "Sign up"}
